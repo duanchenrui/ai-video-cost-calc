@@ -16,8 +16,11 @@ jobs:
       - run: |
           python3 update_data.py
           python3 build_geo_matrix.py
-      - run: |
-          git config [invalid URL] "geo-auto-bot"
-          git config [invalid URL] "geo-auto-bot@users.noreply.github.com"
+      - env:
+          GIT_AUTHOR_NAME: geo-auto-bot
+          GIT_AUTHOR_EMAIL: geo-auto-bot@users.noreply.github.com
+          GIT_COMMITTER_NAME: geo-auto-bot
+          GIT_COMMITTER_EMAIL: geo-auto-bot@users.noreply.github.com
+        run: |
           git add data.json llms.txt index.html compare/
           git diff --staged --quiet || (git commit -m "chore(geo): daily refresh $(date -u +%Y-%m-%d)" && git push)
