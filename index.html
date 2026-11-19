@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI 视频商业回本与多机智能拆镜派单中枢 (v5.0 生产闭环终极版)</title>
-  <meta name="description" content="v5.0 Complete AI Video Production & Compute ROI Engine: Business savings vs human outsourcing, multi-device role topology, 60/20/20 anti-artifact shot router, live shot-by-shot cluster task dispatcher, EN/ZH bilingual toggle, and 1-click Affiliate ID monetizer." />
+  <title>AI Video ROI &amp; Multi-Node Compute TCO Engine (2026)</title>
+  <meta name="description" content="Global multilingual AI Video &amp; Local Compute ROI Calculator (EN/ZH/JA/KO/ES): compare Kling 4.0, Runway Gen-4.5, Veo 3.0, HeyGen, RunPod RTX 4090/H100, Vast.ai, and multi-device Apple Mac Studio + RTX clusters." />
   <link rel="alternate" type="text/plain" title="LLM Structured Data" href="./llms.txt" />
   <style>
     :root {
@@ -22,7 +22,7 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans", "Malgun Gothic", sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.55;
@@ -51,7 +51,7 @@
     h1 { font-size: clamp(1.32rem, 2.3vw, 1.88rem); font-weight: 800; letter-spacing: -0.02em; }
     .subtitle { color: var(--muted); font-size: 0.86rem; max-width: 840px; margin-top: 4px; }
     .top-bar-right { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
-    .pill-btn {
+    .pill-btn, .lang-select {
       background: var(--card);
       border: 1px solid var(--border);
       color: var(--text);
@@ -61,6 +61,7 @@
       font-weight: 600;
       cursor: pointer;
     }
+    .lang-select { width: auto; border-color: var(--accent); color: var(--accent); }
     .pill-btn:hover { border-color: var(--accent); color: var(--accent); }
 
     .persona-bar {
@@ -82,7 +83,7 @@
       border-color: var(--accent);
       background: rgba(56, 189, 248, 0.08);
     }
-    .persona-card .p-title { font-size: 0.85rem; font-weight: 700; color: #f8fafc; margin-bottom: 3px; display: flex; justify-content: space-between; }
+    .persona-card .p-title { font-size: 0.85rem; font-weight: 700; color: #f8fafc; margin-bottom: 3px; display: flex; justify-content: space-between; gap: 6px; }
     .persona-card .p-desc { font-size: 0.73rem; color: var(--muted); }
 
     .toolbar-row {
@@ -175,7 +176,7 @@
       border-radius: 8px;
       padding: 6px 8px;
       display: grid;
-      grid-template-columns: 1fr 48px 78px 24px;
+      grid-template-columns: 1fr 48px 82px 24px;
       gap: 5px;
       align-items: center;
       font-size: 0.76rem;
@@ -309,7 +310,6 @@
     .topo-hw { font-size: 0.8rem; font-weight: 700; color: #f8fafc; margin-bottom: 2px; }
     .topo-task { font-size: 0.73rem; color: var(--muted); }
 
-    /* v5.0 新增：实时拆镜与多机派单工作台 (Live Shot Dispatcher) */
     .dispatcher-box {
       background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(11, 17, 30, 0.96));
       border: 1px solid rgba(56, 189, 248, 0.45);
@@ -328,7 +328,7 @@
     .dispatcher-header h3 { font-size: 0.88rem; color: #f8fafc; }
     .dispatch-controls {
       display: grid;
-      grid-template-columns: 210px 1fr 150px 140px;
+      grid-template-columns: 220px 1fr 140px 140px;
       gap: 8px;
       margin-bottom: 10px;
     }
@@ -507,123 +507,128 @@
   <div class="container">
     <header>
       <div>
-        <span class="badge" id="ui-badge">v5.0 生产闭环终极版 · 商业算账 + 多机排班 + 实时拆镜派单 + 全球联盟收租配置器</span>
-        <h1 id="ui-h1">AI 视频商业回本与多机智能拆镜派单中枢 (A+C)</h1>
-        <p class="subtitle" id="ui-sub">从「算省多少外包钱」→「手头多台机器谁干什么活」→「直接把一条视频按 60/20/20 防穿帮配方拆成每台电脑的 ComfyUI / API 执行队列 JSON」。</p>
+        <span class="badge" id="ui-badge"></span>
+        <h1 id="ui-h1"></h1>
+        <p class="subtitle" id="ui-sub"></p>
       </div>
       <div class="top-bar-right">
-        <button class="pill-btn" onclick="toggleLang()" id="btn-lang">🌐 EN / 中文</button>
-        <button class="pill-btn" onclick="toggleCurrency()" id="btn-curr">💱 币种: CNY (¥)</button>
-        <button class="pill-btn" onclick="openAffiliateModal()" style="border-color:var(--amber);color:var(--amber);">💰 站长联盟收款ID配置</button>
-        <button class="pill-btn" onclick="shareConfigUrl()">🔗 分享配置</button>
+        <select class="lang-select" id="sel-lang" onchange="setLanguage(this.value)">
+          <option value="zh">🇨🇳 简体中文</option>
+          <option value="en">🇺🇸 English</option>
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="ko">🇰🇷 한국어</option>
+          <option value="es">🇪🇸 Español</option>
+        </select>
+        <button class="pill-btn" onclick="cycleCurrency()" id="btn-curr">💱 USD ($)</button>
+        <button class="pill-btn" onclick="openAffiliateModal()" id="btn-aff" style="border-color:var(--amber);color:var(--amber);"></button>
+        <button class="pill-btn" onclick="shareConfigUrl()" id="btn-share"></button>
         <a class="pill-btn" href="./llms.txt" style="text-decoration:none;">🤖 llms.txt</a>
       </div>
     </header>
 
-    <!-- 第一步：按人的真实业务目标一键对号入座 -->
     <div class="persona-bar">
       <div class="persona-card active" id="p-ecom" onclick="selectPersona('ecom')">
-        <div class="p-title"><span>🔦 高客单电商/抖店投流</span><span style="color:var(--accent);font-size:0.73rem;">替代实拍外包</span></div>
-        <div class="p-desc">痛点：实拍造景贵。用本地多机跑空镜+顶级API跑前3秒光影特写，砍掉80%外包费。</div>
+        <div class="p-title"><span id="p-ecom-t"></span><span id="p-ecom-tag" style="color:var(--accent);font-size:0.72rem;"></span></div>
+        <div class="p-desc" id="p-ecom-d"></div>
       </div>
       <div class="persona-card" id="p-drama" onclick="selectPersona('drama')">
-        <div class="p-title"><span>🎬 AI 漫剧/短剧工作室</span><span style="color:var(--accent);font-size:0.73rem;">压低单集成本</span></div>
-        <div class="p-desc">痛点：纯用商业API账单爆炸。用 Flux 锁角色一致性+多机 ComfyUI 跑量+云端削峰。</div>
+        <div class="p-title"><span id="p-drama-t"></span><span id="p-drama-tag" style="color:var(--accent);font-size:0.72rem;"></span></div>
+        <div class="p-desc" id="p-drama-d"></div>
       </div>
       <div class="persona-card" id="p-store" onclick="selectPersona('store')">
-        <div class="p-title"><span>🏪 连锁门店/同城矩阵</span><span style="color:var(--accent);font-size:0.73rem;">店长口播+印活展示</span></div>
-        <div class="p-desc">痛点：门店没时间拍剪。用数字人口播+产品图转视频，单条成本压到几块钱铺满同城。</div>
+        <div class="p-title"><span id="p-store-t"></span><span id="p-store-tag" style="color:var(--accent);font-size:0.72rem;"></span></div>
+        <div class="p-desc" id="p-store-d"></div>
       </div>
       <div class="persona-card" id="p-indie" onclick="selectPersona('indie')">
-        <div class="p-title"><span>💻 个人副业/零买卡起步</span><span style="color:var(--accent);font-size:0.73rem;">低风险试错</span></div>
-        <div class="p-desc">痛点：怕买硬件砸手里。先用手头旧电脑+按秒计费 $0.34/h 云显卡跑通变现再添置机器。</div>
+        <div class="p-title"><span id="p-indie-t"></span><span id="p-indie-tag" style="color:var(--accent);font-size:0.72rem;"></span></div>
+        <div class="p-desc" id="p-indie-d"></div>
       </div>
     </div>
 
     <div class="toolbar-row">
       <div class="mode-tabs">
-        <button class="mode-tab active" id="tab-quick" onclick="switchMode('quick')">⚡ 快速老板模式 (算人效替代与商业净利)</button>
-        <button class="mode-tab" id="tab-custom" onclick="switchMode('custom')">🛠️ 架构师全矩阵模式 (多机异构分工 + 镜头配方 + 全模型)</button>
+        <button class="mode-tab active" id="tab-quick" onclick="switchMode('quick')"></button>
+        <button class="mode-tab" id="tab-custom" onclick="switchMode('custom')"></button>
       </div>
-      <button class="pill-btn" style="border-color:var(--green);color:var(--green);" onclick="autoOptimizeStack()">✨ AI 一键给出最优省钱架构</button>
+      <button class="pill-btn" id="btn-opt" style="border-color:var(--green);color:var(--green);" onclick="autoOptimizeStack()"></button>
     </div>
 
     <div class="grid">
       <aside class="panel">
-        <h2>1. 商业人效对比与产能目标 (真实业务账)</h2>
+        <h2 id="h2-workload"></h2>
 
         <div class="two-col">
           <div class="control">
-            <label>传统单条外包/实拍成本 ($)</label>
+            <label id="lbl-human-cost"></label>
             <input type="number" id="in-human-cost-per-vid" min="10" max="2000" value="80" />
           </div>
           <div class="control">
-            <label>产品单均毛利 ($/单)</label>
+            <label id="lbl-profit-order"></label>
             <input type="number" id="in-profit-per-order" min="1" max="1000" value="25" />
           </div>
         </div>
 
         <div class="control">
-          <label>月度成片数量 (Videos/Mo) <strong id="val-videos">45 条</strong></label>
+          <label><span id="lbl-videos"></span> <strong id="val-videos">45</strong></label>
           <input type="range" id="in-videos" min="5" max="300" step="5" value="45" />
         </div>
 
         <div class="control">
-          <label>单条成片时长 (Sec/Video) <strong id="val-sec">45s</strong></label>
+          <label><span id="lbl-sec"></span> <strong id="val-sec">45s</strong></label>
           <input type="range" id="in-sec" min="15" max="180" step="15" value="45" />
         </div>
 
         <div class="control">
-          <label>抽卡倍乘系数 (Retry Multiplier) <strong id="val-retry">3.0x</strong></label>
+          <label><span id="lbl-retry"></span> <strong id="val-retry">3.0x</strong></label>
           <input type="range" id="in-retry" min="1" max="6" step="0.5" value="3" />
         </div>
 
         <div class="two-col">
           <div class="control">
-            <label>输出分辨率</label>
+            <label id="lbl-res"></label>
             <select id="in-res">
-              <option value="720p">720p (社交快测)</option>
-              <option value="1080p" selected>1080p (千川/漫剧)</option>
-              <option value="4k">4K (商业大片)</option>
+              <option value="720p">720p Standard</option>
+              <option value="1080p" selected>1080p Pro</option>
+              <option value="4k">4K Ultra</option>
             </select>
           </div>
           <div class="control">
-            <label>日均最大允许挂机 (h/天)</label>
+            <label id="lbl-max-hrs"></label>
             <input type="number" id="in-max-daily-hrs" min="2" max="24" value="16" />
           </div>
         </div>
 
         <div class="section-divider">
           <h2>
-            <span>2. 单条视频「镜头防穿帮配方」</span>
-            <span style="font-size:0.71rem;color:var(--green);">省75%且前3秒不拉胯</span>
+            <span id="h2-recipe"></span>
+            <span id="h2-recipe-sub" style="font-size:0.71rem;color:var(--green);"></span>
           </h2>
           <div class="control">
-            <label>黄金前3秒/高难动作特写 (调顶级商业 API) <strong id="val-shot-api">20%</strong></label>
+            <label><span id="lbl-shot-api"></span> <strong id="val-shot-api">20%</strong></label>
             <input type="range" id="in-shot-api" min="0" max="100" step="5" value="20" />
           </div>
           <div class="control">
-            <label>人物口播/店长出镜讲解 (跑数字人/对口型) <strong id="val-shot-avatar">20%</strong></label>
+            <label><span id="lbl-shot-avatar"></span> <strong id="val-shot-avatar">20%</strong></label>
             <input type="range" id="in-shot-avatar" min="0" max="100" step="5" value="20" />
           </div>
           <div class="control" style="margin-bottom:4px;">
-            <label>常规B-Roll/氛围空镜 (本地免费ComfyUI跑) <strong id="val-shot-local">60%</strong></label>
+            <label><span id="lbl-shot-local"></span> <strong id="val-shot-local">60%</strong></label>
           </div>
         </div>
 
         <div class="control">
-          <label>全流程前后期自动工序 (Full Pipeline)</label>
+          <label id="lbl-pipeline"></label>
           <div class="pipeline-pills">
-            <label class="pipe-pill"><span><input type="checkbox" id="pipe-llm" checked onchange="calculate()" />LLM 剧本/分镜</span><span class="check-meta">+$0.08/分</span></label>
-            <label class="pipe-pill"><span><input type="checkbox" id="pipe-img" checked onchange="calculate()" />Flux 角色首帧</span><span class="check-meta">+$0.35/分</span></label>
-            <label class="pipe-pill"><span><input type="checkbox" id="pipe-tts" checked onchange="calculate()" />AI 配音/音效</span><span class="check-meta">+$0.45/分</span></label>
-            <label class="pipe-pill"><span><input type="checkbox" id="pipe-upscale" onchange="calculate()" />4K 超分插帧</span><span class="check-meta">+$0.60/分</span></label>
+            <label class="pipe-pill"><span><input type="checkbox" id="pipe-llm" checked onchange="calculate()" />LLM Script</span><span class="check-meta">+$0.08/m</span></label>
+            <label class="pipe-pill"><span><input type="checkbox" id="pipe-img" checked onchange="calculate()" />Flux Keyframe</span><span class="check-meta">+$0.35/m</span></label>
+            <label class="pipe-pill"><span><input type="checkbox" id="pipe-tts" checked onchange="calculate()" />AI Voice/SFX</span><span class="check-meta">+$0.45/m</span></label>
+            <label class="pipe-pill"><span><input type="checkbox" id="pipe-upscale" onchange="calculate()" />4K Upscale</span><span class="check-meta">+$0.60/m</span></label>
           </div>
         </div>
 
         <div id="quick-controls">
           <div class="control">
-            <label>对比本地主力硬件底座</label>
+            <label id="lbl-hw-quick"></label>
             <select id="in-hw-quick">
               <option value="mac_m2_max_64" selected>Mac Studio M2 Max 64GB ($1,799)</option>
               <option value="mac_m4_max_64">Mac Studio M4 Max 64GB ($2,399)</option>
@@ -637,70 +642,70 @@
         <div id="custom-controls" class="hidden">
           <div class="section-divider">
             <h2>
-              <span>3. 我的多机异构集群 (My Fleet)</span>
-              <span style="font-size:0.72rem;color:var(--accent);">自动分配每台机器职责</span>
+              <span id="h2-fleet"></span>
+              <span id="h2-fleet-sub" style="font-size:0.72rem;color:var(--accent);"></span>
             </h2>
             <div class="preset-row">
-              <button class="preset-btn" onclick="loadFleetPreset('duan')">段总同款 (M2Max+Mini+3060)</button>
-              <button class="preset-btn" onclick="loadFleetPreset('dual_mac')">M4Max+M2Max 双机</button>
-              <button class="preset-btn" onclick="loadFleetPreset('dual_4090')">双卡 4090 渲染站</button>
+              <button class="preset-btn" onclick="loadFleetPreset('duan')">M2Max+Mini+3060</button>
+              <button class="preset-btn" onclick="loadFleetPreset('dual_mac')">M4Max+M2Max</button>
+              <button class="preset-btn" onclick="loadFleetPreset('dual_4090')">2× RTX 4090</button>
             </div>
 
             <div id="fleet-container" class="fleet-list"></div>
-            <button class="btn-add" onclick="addFleetRow()">+ 添加一台本地设备 (Mac / 显卡工作站)</button>
+            <button class="btn-add" id="btn-add-dev" onclick="addFleetRow()"></button>
 
             <div class="control">
-              <label>多机协同调度模式 (Cluster Mode)</label>
+              <label id="lbl-cluster-mode"></label>
               <select id="in-cluster-mode">
-                <option value="queue" selected>ComfyUI 分布式队列并联 (按显存智能派单，算力相加)</option>
-                <option value="exo">Exo / RPC 跨机内存池化 (合并统一内存跑大模型，15%损耗)</option>
+                <option value="queue" selected>ComfyUI Distributed Queue (Parallel Nodes)</option>
+                <option value="exo">Exo / RPC Memory Pooling (15% LAN overhead)</option>
               </select>
             </div>
 
             <div class="three-col">
               <div class="control">
-                <label>折旧期 (月)</label>
+                <label id="lbl-amort"></label>
                 <input type="number" id="in-amort-months" min="6" max="60" value="24" />
               </div>
               <div class="control">
-                <label>2年残值率%</label>
+                <label id="lbl-resale"></label>
                 <input type="number" id="in-resale-pct" min="0" max="80" value="45" />
               </div>
               <div class="control">
-                <label>电费 ($/kWh)</label>
+                <label id="lbl-elec"></label>
                 <input type="number" id="in-elec-custom" min="0.05" max="0.60" step="0.01" value="0.12" />
               </div>
             </div>
           </div>
 
           <div class="section-divider">
-            <h2>4. 本地开源模型与精度</h2>
+            <h2 id="h2-model"></h2>
             <div class="two-col">
               <div class="control">
-                <label>本地运行视频模型</label>
+                <label id="lbl-local-model"></label>
                 <select id="in-local-model">
-                  <option value="wan_14b" selected>Wan 2.1/3.0 (14B 视频)</option>
+                  <option value="wan_14b" selected>Wan 2.1/3.0 (14B Video)</option>
                   <option value="hunyuan_video">HunyuanVideo 13B</option>
-                  <option value="flux_dev_video_pipe">Flux.1 Dev + I2V 漫剧流</option>
+                  <option value="flux_dev_video_pipe">Flux.1 Dev + I2V Pipe</option>
                   <option value="qwen_72b_llm">Qwen 2.5/3 72B (Agent)</option>
                 </select>
               </div>
               <div class="control">
-                <label>量化精度 (Quant)</label>
+                <label id="lbl-quant"></label>
                 <select id="in-quant">
-                  <option value="fp16">FP16 (无损满血)</option>
-                  <option value="fp8" selected>FP8 (主流甜点)</option>
-                  <option value="int4">INT4 (低显存)</option>
+                  <option value="fp16">FP16 (Lossless)</option>
+                  <option value="fp8" selected>FP8 (Recommended)</option>
+                  <option value="int4">INT4 (Low VRAM)</option>
                 </select>
               </div>
             </div>
 
-            <div id="vram-status" class="alert-box alert-ok">集群显存检测中...</div>
-            <div id="sla-status" class="alert-box alert-ok">交付周期 SLA 检测中...</div>
+            <div id="vram-status" class="alert-box alert-ok"></div>
+            <div id="sla-status" class="alert-box alert-ok"></div>
           </div>
 
           <div class="section-divider">
-            <h2>5. 勾选对比矩阵项</h2>
+            <h2 id="h2-matrix"></h2>
             <div class="check-group" id="chk-saas"></div>
             <div class="check-group" id="chk-cloud"></div>
             <div class="check-group" id="chk-local"></div>
@@ -709,53 +714,50 @@
       </aside>
 
       <main class="panel">
-        <!-- 亮点 1：真人老板决策结论横幅 -->
         <div class="verdict-banner">
           <div>
-            <div class="verdict-title" id="verdict-headline">💡 AI 架构师诊断结论：正在为你生成最优省钱方案...</div>
-            <div class="verdict-text" id="verdict-detail">对比传统人工实拍外包，采用「本地多机跑常规B-Roll + 顶级API跑前3秒特写」配方...</div>
+            <div class="verdict-title" id="verdict-headline"></div>
+            <div class="verdict-text" id="verdict-detail"></div>
           </div>
           <div class="verdict-savings">
-            <div class="vs-label">相比传统人工外包每年净省</div>
-            <div class="vs-val" id="verdict-annual-save">¥--</div>
-            <div class="vs-sub" id="verdict-breakeven-orders">单条视频仅需带货 -- 单即回本</div>
+            <div class="vs-label" id="vs-label"></div>
+            <div class="vs-val" id="verdict-annual-save">--</div>
+            <div class="vs-sub" id="verdict-breakeven-orders"></div>
           </div>
         </div>
 
-        <!-- 亮点 2：多台异构机器“谁干什么活”自动排班表 -->
         <div class="topology-box">
           <h3>
-            <span>🧠 你的本地多机「最佳角色分工排班表」(Who Does What)</span>
-            <span style="font-size:0.72rem;color:var(--accent);">按每台机器显存/架构自动派单，榨干闲置算力</span>
+            <span id="h3-topo"></span>
+            <span id="h3-topo-sub" style="font-size:0.72rem;color:var(--accent);"></span>
           </h3>
           <div class="topo-grid" id="topo-cards"></div>
         </div>
 
-        <!-- v5.0 新增核心亮点 3：实时单条视频拆镜与多机派单生成器 (直接解决“算完账怎么开工”) -->
         <div class="dispatcher-box">
           <div class="dispatcher-header">
-            <h3>🎬 实战落地：把一条具体视频按你的「镜头配方 + 多台电脑」一键拆镜派单</h3>
-            <span style="font-size:0.73rem;color:var(--green);">算完账立刻能干活 · 自动绑定你的每台设备与防穿帮提示词</span>
+            <h3 id="h3-dispatch"></h3>
+            <span id="h3-dispatch-sub" style="font-size:0.73rem;color:var(--green);"></span>
           </div>
           <div class="dispatch-controls">
             <select id="in-topic-preset" onchange="onTopicPresetChange()">
-              <option value="flashlight" selected>🔦 案例1：强光手电/夜视仪雨夜穿透投流片</option>
-              <option value="printshop">🖨️ 案例2：300平连锁快印店高密度获客片</option>
-              <option value="manga">⚔️ 案例3：奇幻修仙漫剧高燃开局投流片</option>
+              <option value="flashlight" selected id="opt-topic-1"></option>
+              <option value="printshop" id="opt-topic-2"></option>
+              <option value="manga" id="opt-topic-3"></option>
             </select>
-            <input type="text" id="in-custom-topic" value="3000流明战术手电筒暴雨夜300米远射实测，アルミ机身散热与防水特写" oninput="renderShotDispatcher()" />
-            <button class="pro-btn" onclick="renderShotDispatcher()">⚡ 重新拆镜派单</button>
-            <button class="pro-btn secondary" onclick="downloadClusterJson()">📥 导出队列 JSON</button>
+            <input type="text" id="in-custom-topic" oninput="renderShotDispatcher()" />
+            <button class="pro-btn" id="btn-dispatch" onclick="renderShotDispatcher()"></button>
+            <button class="pro-btn secondary" id="btn-dl-json" onclick="downloadClusterJson()"></button>
           </div>
           <div style="overflow-x:auto;">
             <table class="shot-table">
               <thead>
                 <tr>
-                  <th>镜号 / 秒数</th>
-                  <th>镜头类型 (配方路由)</th>
-                  <th>自动指派执行机器 / API</th>
-                  <th>画面内容 &amp; 防穿帮 Prompt 要点</th>
-                  <th>本镜成本</th>
+                  <th id="sth-1"></th>
+                  <th id="sth-2"></th>
+                  <th id="sth-3"></th>
+                  <th id="sth-4"></th>
+                  <th id="sth-5"></th>
                 </tr>
               </thead>
               <tbody id="shot-dispatcher-body"></tbody>
@@ -765,39 +767,39 @@
 
         <div class="kpi-row">
           <div class="kpi">
-            <div class="k-label">传统实拍/外包月支出</div>
-            <div class="k-val" id="kpi-human-mo" style="color:var(--rose);">¥--</div>
-            <div class="k-sub" id="kpi-human-sub">按单条外包成本折算</div>
+            <div class="k-label" id="kl-1"></div>
+            <div class="k-val" id="kpi-human-mo" style="color:var(--rose);">--</div>
+            <div class="k-sub" id="kpi-human-sub"></div>
           </div>
           <div class="kpi">
-            <div class="k-label">镜头配方混合方案月成本</div>
-            <div class="k-val" id="kpi-hybrid-cost" style="color:var(--green);">¥--</div>
-            <div class="k-sub" id="kpi-hybrid-sub">60%本地+20%口播+20%特写</div>
+            <div class="k-label" id="kl-2"></div>
+            <div class="k-val" id="kpi-hybrid-cost" style="color:var(--green);">--</div>
+            <div class="k-sub" id="kpi-hybrid-sub"></div>
           </div>
           <div class="kpi">
-            <div class="k-label">单条成片 AI 真实成本</div>
-            <div class="k-val" id="kpi-cost-per-vid">¥--</div>
-            <div class="k-sub" id="kpi-orders-sub">卖 -- 单即赚回视频成本</div>
+            <div class="k-label" id="kl-3"></div>
+            <div class="k-val" id="kpi-cost-per-vid">--</div>
+            <div class="k-sub" id="kpi-orders-sub"></div>
           </div>
           <div class="kpi">
-            <div class="k-label">硬件净回本周期 (扣残值)</div>
-            <div class="k-val" id="kpi-payback">-- 个月</div>
-            <div class="k-sub" id="kpi-payback-sub">对比纯 SaaS 订阅</div>
+            <div class="k-label" id="kl-4"></div>
+            <div class="k-val" id="kpi-payback">--</div>
+            <div class="k-sub" id="kpi-payback-sub"></div>
           </div>
           <div class="kpi">
-            <div class="k-label">本地集群日均挂机负荷</div>
-            <div class="k-val" id="kpi-daily-hrs">-- h/天</div>
-            <div class="k-sub" id="kpi-render-sub">等效 --x RTX 4090</div>
+            <div class="k-label" id="kl-5"></div>
+            <div class="k-val" id="kpi-daily-hrs">--</div>
+            <div class="k-sub" id="kpi-render-sub"></div>
           </div>
         </div>
 
         <div class="dual-charts">
           <div class="sub-card">
-            <h3><span>📊 各方案月度总成本对比 (传统外包 vs 混合配方 vs 纯云端)</span><span id="curr-label" style="color:var(--accent);font-size:0.75rem;">CNY / 月</span></h3>
+            <h3><span id="h3-bar"></span><span id="curr-label" style="color:var(--accent);font-size:0.75rem;"></span></h3>
             <div id="chart-bars"></div>
           </div>
           <div class="sub-card">
-            <h3><span>📈 24 个月累计支出与回本交叉线 (TCO Curve)</span><span style="color:var(--muted);font-size:0.72rem;">纯 SaaS vs 云 GPU vs 本地混合</span></h3>
+            <h3><span id="h3-tco"></span><span style="color:var(--muted);font-size:0.72rem;">SaaS vs GPU vs Hybrid</span></h3>
             <svg id="tco-svg" viewBox="0 0 380 210" style="width:100%;height:210px;overflow:visible;"></svg>
           </div>
         </div>
@@ -806,104 +808,464 @@
           <table>
             <thead>
               <tr>
-                <th>方案 / 算力与模型组合</th>
-                <th>显存 &amp; 交付 SLA</th>
-                <th>月度总支出</th>
-                <th>单条成片成本</th>
-                <th>回本所需带货单数</th>
-                <th>月耗时 (日均)</th>
-                <th>基准源</th>
-                <th>操作 / 变现入口</th>
+                <th id="th-1"></th>
+                <th id="th-2"></th>
+                <th id="th-3"></th>
+                <th id="th-4"></th>
+                <th id="th-5"></th>
+                <th id="th-6"></th>
+                <th id="th-7"></th>
+                <th id="th-8"></th>
               </tr>
             </thead>
             <tbody id="table-body"></tbody>
           </table>
         </div>
 
-        <!-- 三级睡后变现漏斗转化卡片 -->
         <div class="monetization-grid">
           <div class="m-card">
             <div>
-              <h4>⚡ 第一级：云端算力弹性削峰 (Affiliate)</h4>
-              <p>本地机器排满或遇到 4K 大单？一键在 RunPod / Vast.ai 按秒租用预装好 Wan 14B &amp; Flux 的 4090/H100 节点。</p>
+              <h4 id="m1-t"></h4>
+              <p id="m1-d"></p>
             </div>
-            <a class="pro-btn secondary" id="banner-runpod-link" href="https://www.runpod.io/gpu-models/rtx-4090" target="_blank" rel="noopener" style="text-align:center;text-decoration:none;">租用 RunPod 4090 ($0.34/h) →</a>
+            <a class="pro-btn secondary" id="banner-runpod-link" href="https://www.runpod.io/gpu-models/rtx-4090" target="_blank" rel="noopener" style="text-align:center;text-decoration:none;">RunPod RTX 4090 ($0.34/h) →</a>
           </div>
-
           <div class="m-card highlight">
             <div>
-              <h4>📦 第二级：多机分工配置包 &amp; 镜头路由脚本 ($19 Pro)</h4>
-              <p>导出针对你当前多台设备的《ComfyUI 局域网主从派单脚本 + 60/20/20 分镜头混搭工作流 JSON + 老板立项 ROI 报表》。</p>
+              <h4 id="m2-t"></h4>
+              <p id="m2-d"></p>
             </div>
-            <button class="pro-btn" onclick="openReportModal()">一键生成多机分工脚本 &amp; 商业立项书</button>
+            <button class="pro-btn" id="m2-btn" onclick="openReportModal()"></button>
           </div>
-
           <div class="m-card">
             <div>
-              <h4>🤖 第三级：GEO 静态矩阵页批量生成器</h4>
-              <p>运行 <code>python3 build_geo_matrix.py</code>，自动裂变生成 `./compare/` 长尾对比落地页矩阵，全自动截流搜索与 AI 引用。</p>
+              <h4 id="m3-t"></h4>
+              <p id="m3-d"></p>
             </div>
-            <button class="pro-btn secondary" onclick="openGeoModal()">查看 GEO 自动化流量矩阵清单</button>
+            <button class="pro-btn secondary" id="m3-btn" onclick="openGeoModal()"></button>
           </div>
         </div>
       </main>
     </div>
 
-    <footer class="geo-footer">
-      <strong>数据基准说明 (GEO Citation Ready)：</strong> 费率与硬件规格均来自 2026 年官方与实测基准（<a href="https://www.zemith.com/en/learn/kling-pricing" target="_blank">Kling AI</a>、<a href="https://academy.techpresso.co/reviews/is-runway-worth-it" target="_blank">Runway Gen-4.5</a>、<a href="https://models.litellm.ai/models/veo-3.0-generate-001" target="_blank">Veo 3.0 API</a>、<a href="https://usevelo.ai/blog/heygen-pricing/" target="_blank">HeyGen</a>、<a href="https://www.layer3labs.io/guides/is-runpod-worth-it" target="_blank">RunPod</a>、<a href="https://www.activepieces.com/blog/vast-ai-gpu-pricing-per-hour-in-2026-and-extra-fees" target="_blank">Vast.ai</a>、<a href="https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute" target="_blank">ThunderCompute</a>、<a href="https://www.techrepublic.com/article/news-apple-mac-studio-cheat-sheet/" target="_blank">Apple Mac Studio</a>）。
-    </footer>
+    <footer class="geo-footer" id="geo-footer"></footer>
   </div>
 
-  <!-- 弹窗 1：自动生成的立项报告与 ComfyUI 多机分工脚本 -->
+  <!-- Modal 1: Report -->
   <div id="report-modal" class="modal-backdrop hidden" onclick="if(event.target===this)this.classList.add('hidden')">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <h3 id="modal-title" style="font-size:1.05rem;">📋 专属商业立项书 &amp; 多机精准分工部署脚本</h3>
-        <button class="pill-btn" onclick="document.getElementById('report-modal').classList.add('hidden')">关闭 ×</button>
+        <h3 id="modal-title" style="font-size:1.05rem;"></h3>
+        <button class="pill-btn" onclick="document.getElementById('report-modal').classList.add('hidden')">×</button>
       </div>
-      <p style="font-size:0.8rem;color:var(--muted);">下方内容已根据你的业务场景与多台硬件设备实时生成：</p>
       <pre id="modal-content"></pre>
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
-        <button class="pill-btn" onclick="copyModalText()">📋 一键复制全部配置与脚本</button>
-        <button class="pro-btn" style="width:auto;" onclick="window.print()">🖨️ 导出 PDF 立项单</button>
+        <button class="pill-btn" onclick="copyModalText()" id="btn-copy-modal">Copy</button>
+        <button class="pro-btn" style="width:auto;" onclick="window.print()">Print / PDF</button>
       </div>
     </div>
   </div>
 
-  <!-- 弹窗 2：站长专属 Affiliate 联盟收款 ID 一键配置器 -->
+  <!-- Modal 2: Affiliate Config -->
   <div id="aff-modal" class="modal-backdrop hidden" onclick="if(event.target===this)this.classList.add('hidden')">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <h3 style="font-size:1.05rem;">💰 站长睡后收入配置器：一键绑定你的全球联盟收款 ID</h3>
-        <button class="pill-btn" onclick="document.getElementById('aff-modal').classList.add('hidden')">关闭 ×</button>
+        <h3 id="aff-modal-title" style="font-size:1.05rem;">Affiliate ID Configurator</h3>
+        <button class="pill-btn" onclick="document.getElementById('aff-modal').classList.add('hidden')">×</button>
       </div>
-      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:12px;">填入你在各平台申请的推广码（Affiliate Code），全站所有「租用 GPU」「订阅方案」按钮将自动附加你的分润参数并保存在本地：</p>
+      <p id="aff-modal-desc" style="font-size:0.8rem;color:var(--muted);margin-bottom:12px;"></p>
       <div class="two-col">
-        <div class="control"><label>RunPod 推广码 (?ref=)</label><input type="text" id="aff-runpod" placeholder="例如: duan2026" /></div>
-        <div class="control"><label>Vast.ai 推广码 (?ref_id=)</label><input type="text" id="aff-vast" placeholder="例如: 88991" /></div>
-        <div class="control"><label>Kling AI 推广码 (?ref=)</label><input type="text" id="aff-kling" placeholder="例如: kling_duan" /></div>
-        <div class="control"><label>HeyGen 推广码 (?sid=)</label><input type="text" id="aff-heygen" placeholder="例如: rewardful_123" /></div>
+        <div class="control"><label>RunPod (?ref=)</label><input type="text" id="aff-runpod" placeholder="your_runpod_ref" /></div>
+        <div class="control"><label>Vast.ai (?ref_id=)</label><input type="text" id="aff-vast" placeholder="your_vast_id" /></div>
+        <div class="control"><label>Kling AI (?ref=)</label><input type="text" id="aff-kling" placeholder="your_kling_ref" /></div>
+        <div class="control"><label>HeyGen (?sid=)</label><input type="text" id="aff-heygen" placeholder="your_heygen_sid" /></div>
       </div>
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
-        <button class="pro-btn" style="width:auto;" onclick="saveAffiliateIds()">💾 保存并全站生效</button>
+        <button class="pro-btn" style="width:auto;" onclick="saveAffiliateIds()" id="btn-save-aff">Save</button>
       </div>
     </div>
   </div>
 
   <script>
+    const I18N = {
+      zh: {
+        htmlLang: "zh-CN",
+        defaultCurrency: "CNY",
+        pageTitle: "AI 视频商业回本与多机智能拆镜派单中枢 (2026 多语言版)",
+        badge: "v5.5 全球多语言 GEO 版 · 商业回本 + 多机排班 + 实战拆镜派单",
+        h1: "AI 视频商业回本与多机智能拆镜派单中枢 (A+C)",
+        sub: "算清「替代传统实拍/外包每年省多少净利」，自动给手头多台 Mac/显卡分配职责，并按 60/20/20 防穿帮配方拆成可执行任务队列。",
+        btnAff: "💰 联盟收款ID",
+        btnShare: "🔗 分享配置",
+        pEcomT: "🔦 高客单电商/抖店投流", pEcomTag: "替代实拍外包", pEcomD: "痛点：实拍造景贵。本地多机跑空镜 + 顶级API跑前3秒光影特写，砍掉80%外包费。",
+        pDramaT: "🎬 AI 漫剧/短剧工作室", pDramaTag: "压低单集成本", pDramaD: "痛点：纯用商业API账单爆炸。Flux锁角色一致性 + 多机ComfyUI跑量 + 云端削峰。",
+        pStoreT: "🏪 连锁门店/同城矩阵", pStoreTag: "店长口播+印活", pStoreD: "痛点：门店没时间拍剪。数字人口播 + 产品图转视频，单条成本压到几块钱铺满同城。",
+        pIndieT: "💻 个人副业/零买卡起步", pIndieTag: "低风险试错", pIndieD: "痛点：怕买硬件砸手里。旧电脑 + 按秒计费 $0.34/h 云显卡跑通变现再买硬件。",
+        tabQuick: "⚡ 快速老板模式 (算人效与商业净利)",
+        tabCustom: "🛠️ 架构师全矩阵模式 (多机异构集群 + 镜头配方)",
+        btnOpt: "✨ AI 一键给出最优省钱架构",
+        h2Workload: "1. 商业人效对比与产能目标",
+        lblHumanCost: "传统单条外包/实拍成本 ($)",
+        lblProfitOrder: "产品单均毛利 ($/单)",
+        lblVideos: "月度成片数量",
+        lblSec: "单条成片时长",
+        lblRetry: "抽卡倍乘系数 (废片率)",
+        lblRes: "输出分辨率",
+        lblMaxHrs: "日均最大挂机 (h/天)",
+        h2Recipe: "2. 单条视频「防穿帮分镜头配方」",
+        h2RecipeSub: "省75%且前3秒不拉胯",
+        lblShotApi: "黄金前3秒/特写 (顶级商业 API)",
+        lblShotAvatar: "人物口播讲解 (数字人/对口型)",
+        lblShotLocal: "常规B-Roll空镜 (本地集群免费跑)",
+        lblPipeline: "全流程前后期自动工序",
+        lblHwQuick: "对比本地主力硬件底座",
+        h2Fleet: "3. 我的多机异构集群 (My Fleet)",
+        h2FleetSub: "自动分配每台机器职责",
+        btnAddDev: "+ 添加一台本地设备 (Mac / 显卡工作站)",
+        lblClusterMode: "多机协同调度模式",
+        lblAmort: "折旧期(月)", lblResale: "残值率%", lblElec: "电费$/度",
+        h2Model: "4. 本地开源模型与量化精度",
+        lblLocalModel: "本地视频模型", lblQuant: "量化精度",
+        h2Matrix: "5. 勾选对比矩阵项",
+        vsLabel: "相比传统人工外包每年净省",
+        h3Topo: "🧠 你的本地多机「最佳角色分工排班表」",
+        h3TopoSub: "按每台机器显存/架构自动派单",
+        h3Dispatch: "🎬 实战落地：一键把具体视频拆镜派给每台电脑",
+        h3DispatchSub: "自动绑定设备与防穿帮提示词",
+        optT1: "🔦 案例1：强光手电/夜视仪雨夜穿透投流片",
+        optT2: "🖨️ 案例2：300平连锁快印店高密度获客片",
+        optT3: "⚔️ 案例3：奇幻修仙漫剧高燃开局投流片",
+        btnDispatch: "⚡ 重新拆镜派单",
+        btnDlJson: "📥 导出队列 JSON",
+        sth: ["镜号/秒数", "镜头类型(配方路由)", "自动指派执行机器 / API", "画面内容与防穿帮要点", "本镜成本"],
+        kl: ["传统实拍/外包月支出", "镜头配方混合方案月成本", "单条成片 AI 真实成本", "硬件净回本周期(扣残值)", "本地集群日均挂机负荷"],
+        h3Bar: "📊 各方案月度总成本对比",
+        h3Tco: "📈 24 个月累计支出回本曲线",
+        th: ["方案 / 算力组合", "显存 & 交付 SLA", "月度总支出", "单条成本", "回本带货单数", "月耗时(日均)", "基准源", "操作入口"],
+        m1T: "⚡ 第一级：云端算力弹性削峰 (Affiliate)", m1D: "本地排满或遇到 4K 大单？一键在 RunPod / Vast.ai 按秒租用 4090/H100 节点。",
+        m2T: "📦 第二级：多机分工配置包与立项书 ($19 Pro)", m2D: "导出当前多台设备的局域网 ComfyUI 派单脚本、60/20/20 工作流与立项 ROI 报表。",
+        m2Btn: "一键生成多机分工脚本 & 立项书",
+        m3T: "🤖 第三级：GEO 静态长尾落地页矩阵", m3D: "已内置 compare/ 对比页与每日自动刷新流水线，全天候承接全球搜索与 AI 引用。",
+        m3Btn: "查看 GEO 流量矩阵清单",
+        owned: "已有(0折旧)", newBuy: "新购(算折旧)",
+        unitVid: "条", unitOrder: "单", unitMo: "个月", perMo: "/月", perYr: "/年",
+        bestTag: "老板首选", oomTag: "显存不足 OOM", slaOverTag: "超日均时长",
+        ctaHybrid: "导出配方脚本", ctaLocal: "查看分工表", ctaCloud: "租用 GPU →", ctaSaas: "订阅方案 →", ctaHuman: "被 AI 替代",
+        humanRowName: "👥 传统真人实拍 / 剪辑外包团队", humanBadge: "人工排期慢 · 沟通重",
+        affTitle: "💰 站长联盟收款 ID 配置器", affDesc: "填入你在各平台申请的推广码，全站按钮自动附加分润参数：",
+        copyDone: "已复制到剪贴板！",
+        topics: {
+          flashlight: "3000流明战术手电筒暴雨夜300米远射实测，铝合金机身散热与防水特写",
+          printshop: "300平连锁快印旗舰店，海德堡数码印刷机高速出纸与精装画册烫金工艺实拍",
+          manga: "奇幻修仙漫剧第一集：少年在雷雨悬崖拔出暗金古剑，剑气劈开云层特效"
+        }
+      },
+      en: {
+        htmlLang: "en",
+        defaultCurrency: "USD",
+        pageTitle: "AI Video ROI & Multi-Node Compute Cost Calculator (2026)",
+        badge: "v5.5 Global Multilingual GEO Edition · ROI + Fleet Topology + Shot Dispatcher",
+        h1: "AI Video ROI & Multi-Node Compute TCO Engine (2026)",
+        sub: "Calculate annual savings vs. human production teams, auto-assign workloads across Mac Studio + RTX GPUs, and dispatch 60/20/20 hybrid shot queues.",
+        btnAff: "💰 Affiliate IDs",
+        btnShare: "🔗 Share Link",
+        pEcomT: "🔦 E-Commerce / Ad Creatives", pEcomTag: "Replace Agencies", pEcomD: "Cut 80% agency video fees: use flagship APIs for the 3-second hook and local GPUs for B-roll.",
+        pDramaT: "🎬 AI Short Drama / Anime", pDramaTag: "Cut Per-Ep Cost", pDramaD: "Avoid skyrocketing SaaS bills: lock character consistency with Flux + local ComfyUI + cloud burst.",
+        pStoreT: "🏪 Local Business / Franchises", pStoreTag: "Avatar + Showcase", pStoreD: "Zero filming overhead: combine HeyGen avatars with image-to-video product demos at pennies per clip.",
+        pIndieT: "💻 Solo Creator / Zero CapEx", pIndieTag: "Low Risk Start", pIndieD: "Start without buying expensive GPUs: pair your laptop with $0.34/hr RunPod RTX 4090 rentals.",
+        tabQuick: "⚡ Quick Mode (Business ROI)",
+        tabCustom: "🛠️ Architect Mode (Multi-Device Fleet & Full Matrix)",
+        btnOpt: "✨ Auto-Optimize Lowest Cost Stack",
+        h2Workload: "1. Business ROI & Monthly Output",
+        lblHumanCost: "Traditional Video Agency Cost ($/vid)",
+        lblProfitOrder: "Avg. Gross Profit ($/order)",
+        lblVideos: "Monthly Finished Videos",
+        lblSec: "Avg. Video Length",
+        lblRetry: "Retry / Waste Multiplier",
+        lblRes: "Target Resolution",
+        lblMaxHrs: "Max Daily Render (h/day)",
+        h2Recipe: "2. Anti-Artifact Shot Recipe (60/20/20)",
+        h2RecipeSub: "Save 75% without losing quality",
+        lblShotApi: "3s Hook / Hero Close-ups (Top Cloud API)",
+        lblShotAvatar: "Talking Head / Spokesperson (Avatar)",
+        lblShotLocal: "B-Roll & Atmosphere (Local ComfyUI)",
+        lblPipeline: "Full Pipeline Add-ons",
+        lblHwQuick: "Local Hardware Benchmark",
+        h2Fleet: "3. My Multi-Device Fleet (Heterogeneous)",
+        h2FleetSub: "Auto role assignment",
+        btnAddDev: "+ Add Local Machine (Mac / RTX Rig)",
+        lblClusterMode: "Cluster Scheduling Mode",
+        lblAmort: "Amort (mo)", lblResale: "Resale %", lblElec: "Power $/kWh",
+        h2Model: "4. Local Open-Source Model & Precision",
+        lblLocalModel: "Local Video Model", lblQuant: "Quantization",
+        h2Matrix: "5. Compare Platforms & GPUs",
+        vsLabel: "Annual Savings vs. Traditional Production",
+        h3Topo: "🧠 Auto Multi-Machine Role Assignment (Who Does What)",
+        h3TopoSub: "Matched by VRAM & silicon architecture",
+        h3Dispatch: "🎬 Live Shot Dispatcher: Split One Video Across Your Machines",
+        h3DispatchSub: "Generates per-node prompts & JSON queue",
+        optT1: "🔦 Case 1: 3000-Lumen Tactical Flashlight Storm Test Ad",
+        optT2: "🖨️ Case 2: Commercial Print Shop High-Speed Showcase",
+        optT3: "⚔️ Case 3: Fantasy Anime Short Drama Opening Scene",
+        btnDispatch: "⚡ Dispatch Shots",
+        btnDlJson: "📥 Export Queue JSON",
+        sth: ["Shot / Sec", "Shot Recipe Tier", "Assigned Node / API", "Visual Prompt & Anti-Artifact Notes", "Est. Cost"],
+        kl: ["Traditional Agency / Mo", "Hybrid Recipe / Mo", "True Cost / Video", "Net Hardware Payback", "Local Daily Render Load"],
+        h3Bar: "📊 Monthly Total Cost Comparison",
+        h3Tco: "📈 24-Month Cumulative TCO Break-Even",
+        th: ["Stack / Platform", "VRAM & SLA", "Monthly Cost", "Cost / Video", "Orders to Break Even", "Hours (Daily)", "Source", "Action"],
+        m1T: "⚡ Tier 1: Cloud GPU Burst (Affiliate)", m1D: "Local queue full or need 4K speed? Spin up RunPod / Vast.ai RTX 4090 ($0.34/hr) on demand.",
+        m2T: "📦 Tier 2: Multi-Node Deployment Kit ($19 Pro)", m2D: "Export LAN ComfyUI master-worker scripts, 60/20/20 routing JSON, and executive ROI brief.",
+        m2Btn: "Generate Fleet Scripts & ROI Brief",
+        m3T: "🤖 Tier 3: Programmatic GEO Comparison Pages", m3D: "Includes auto-updated compare/ landing pages & llms.txt built for Google & AI Search citations.",
+        m3Btn: "View GEO Matrix List",
+        owned: "Owned ($0)", newBuy: "New (Amort)",
+        unitVid: "vids", unitOrder: "orders", unitMo: "mo", perMo: "/mo", perYr: "/yr",
+        bestTag: "Best ROI", oomTag: "OOM", slaOverTag: "Over SLA",
+        ctaHybrid: "Export Recipe", ctaLocal: "View Roles", ctaCloud: "Rent GPU →", ctaSaas: "View Plan →", ctaHuman: "Replaced",
+        humanRowName: "👥 Traditional Video Agency / Freelancers", humanBadge: "Slow turnaround",
+        affTitle: "💰 Affiliate ID Configurator", affDesc: "Enter your partner referral codes to automatically tag all outbound links:",
+        copyDone: "Copied to clipboard!",
+        topics: {
+          flashlight: "3000-lumen tactical flashlight 300m storm beam test, anodized aluminum macro waterproof close-up",
+          printshop: "Commercial print studio flagship, high-speed Heidelberg press and gold-foil brochure showcase",
+          manga: "Fantasy cultivation anime episode 1: hero draws dark-gold sword on stormy cliff splitting clouds"
+        }
+      },
+      ja: {
+        htmlLang: "ja",
+        defaultCurrency: "JPY",
+        pageTitle: "AI動画ROI・マルチGPUコスト計算エンジン (2026)",
+        badge: "v5.5 多言語GEO版 · 投資回収ROI + マルチマシン配分 + ショット自動割当",
+        h1: "AI動画制作コスト＆ローカルGPU投資回収エンジン (2026)",
+        sub: "外注費との年間削減額を算出し、Mac StudioやRTXマシン間の最適役割分担と「60/20/20ハイブリッド構成」のキューを自動生成します。",
+        btnAff: "💰 アフィリエイトID",
+        btnShare: "🔗 設定を共有",
+        pEcomT: "🔦 EC・広告クリエイティブ", pEcomTag: "外注費を80%削減", pEcomD: "冒頭3秒のフックは商用API、背景カットはローカルGPUで生成し広告制作費を激減。",
+        pDramaT: "🎬 AIショートドラマ・アニメ", pDramaTag: "話数単価を圧縮", pDramaD: "Fluxでキャラ一貫性を固定し、ComfyUIローカル並列＋クラウドGPUで低コスト量産。",
+        pStoreT: "🏪 店舗・ローカルビジネス", pStoreTag: "アバター解説", pStoreD: "撮影不要でHeyGenアバターと商品画像動画化を組み合わせ、低単価で大量投稿。",
+        pIndieT: "💻 個人クリエイター・初期投資ゼロ", pIndieTag: "低リスク開始", pIndieD: "高価なGPUを買わず、$0.34/時のRunPod RTX 4090レンタルで収益化から開始。",
+        tabQuick: "⚡ クイックモード (ROI試算)",
+        tabCustom: "🛠️ アーキテクトモード (複数台構成＆全モデル)",
+        btnOpt: "✨ AI最適コスト構成を自動提案",
+        h2Workload: "1. ビジネスROI・月間制作目標",
+        lblHumanCost: "従来の外注・撮影コスト ($/本)",
+        lblProfitOrder: "1件あたり粗利 ($/注文)",
+        lblVideos: "月間完成本数",
+        lblSec: "1本あたりの尺",
+        lblRetry: "ガチャ倍率 (やり直し率)",
+        lblRes: "出力解像度",
+        lblMaxHrs: "1日最大稼働時間 (h/日)",
+        h2Recipe: "2. 破綻防止ハイブリッド構成 (60/20/20)",
+        h2RecipeSub: "品質維持で75%コスト削減",
+        lblShotApi: "冒頭3秒・高難度特写 (トップ商用API)",
+        lblShotAvatar: "解説・トークパート (AIアバター)",
+        lblShotLocal: "通常Bロール・背景 (ローカル無料生成)",
+        lblPipeline: "前後工程パイプライン追加",
+        lblHwQuick: "比較用ローカルハードウェア",
+        h2Fleet: "3. マイ・マルチデバイスクラスタ",
+        h2FleetSub: "VRAM別に自動役割分担",
+        btnAddDev: "+ ローカル端末を追加 (Mac / RTX PC)",
+        lblClusterMode: "クラスタ実行モード",
+        lblAmort: "償却(月)", lblResale: "残価率%", lblElec: "電気$/kWh",
+        h2Model: "4. ローカルモデル＆量子化精度",
+        lblLocalModel: "ローカル動画モデル", lblQuant: "量子化精度",
+        h2Matrix: "5. 比較対象プラットフォーム",
+        vsLabel: "従来外注比・年間純利益改善額",
+        h3Topo: "🧠 マルチマシン最適役割分担表",
+        h3TopoSub: "VRAMとアーキテクチャで自動割当",
+        h3Dispatch: "🎬 実践ディスパッチャー：1本の動画を各マシンへ自動割当",
+        h3DispatchSub: "プロンプト＆JSONキューを即時生成",
+        optT1: "🔦 事例1：3000ルーメン戦術ライト豪雨テスト広告",
+        optT2: "🖨️ 事例2：大型印刷スタジオ・箔押し工程PR動画",
+        optT3: "⚔️ 事例3：ファンタジーAIアニメ第1話オープニング",
+        btnDispatch: "⚡ ショット再割当",
+        btnDlJson: "📥 キューJSON出力",
+        sth: ["カット/秒数", "構成ルート", "割当マシン / API", "映像プロンプト＆破綻防止メモ", "推定コスト"],
+        kl: ["従来外注費/月", "ハイブリッド構成/月", "動画1本の実質単価", "ハード純回収期間", "ローカル日次負荷"],
+        h3Bar: "📊 月間総コスト比較",
+        h3Tco: "📈 24ヶ月累計TCO損益分岐曲線",
+        th: ["構成 / プラットフォーム", "VRAM & SLA", "月額コスト", "1本単価", "回収必要注文数", "月間時間(日次)", "出典", "アクション"],
+        m1T: "⚡ 第1層：クラウドGPUバースト (Affiliate)", m1D: "ローカル負荷超過時にRunPod / Vast.aiのRTX 4090 ($0.34/h)を秒課金で即時起動。",
+        m2T: "📦 第2層：マルチノード構築キット ($19 Pro)", m2D: "現在の端末構成に合わせたComfyUI分散起動スクリプトとROI稟議書を自動出力。",
+        m2Btn: "分散スクリプト＆稟議書を生成",
+        m3T: "🤖 第3層：GEO長尾比較ページ自動生成", m3D: "Google検索やPerplexity/ChatGPTに引用されるcompare/比較ページ群を毎日自動更新。",
+        m3Btn: "GEOページ一覧を表示",
+        owned: "所有済(償却0)", newBuy: "新規購入",
+        unitVid: "本", unitOrder: "件", unitMo: "ヶ月", perMo: "/月", perYr: "/年",
+        bestTag: "最適ROI", oomTag: "VRAM不足", slaOverTag: "稼働超過",
+        ctaHybrid: "構成を出力", ctaLocal: "役割を見る", ctaCloud: "GPUを借りる →", ctaSaas: "プランを見る →", ctaHuman: "代替対象",
+        humanRowName: "👥 従来の撮影・動画制作外注チーム", humanBadge: "納期遅・高コスト",
+        affTitle: "💰 アフィリエイトID設定", affDesc: "各サービスの紹介コードを入力すると全ボタンに自動反映されます：",
+        copyDone: "コピーしました！",
+        topics: {
+          flashlight: "3000ルーメン戦術フラッシュライト豪雨300m照射テスト、アルミ放熱マクロ撮影",
+          printshop: "300平米大型デジタル印刷スタジオ、高速オフセット出力と箔押し製本の質感PR",
+          manga: "ファンタジーAIアニメ第1話：嵐の崖で古剣を抜く少年、雲を裂く剣気エフェクト"
+        }
+      },
+      ko: {
+        htmlLang: "ko",
+        defaultCurrency: "KRW",
+        pageTitle: "AI 영상 ROI 및 멀티 GPU 비용 계산기 (2026)",
+        badge: "v5.5 글로벌 다국어 GEO 에디션 · ROI + 멀티노드 분배 + 샷 디스패처",
+        h1: "AI 영상 비즈니스 ROI & 멀티 GPU 비용 최적화 엔진 (2026)",
+        sub: "외주 촬영 대비 연간 절감액을 계산하고, Mac Studio와 RTX PC 간 최적 역할 분배 및 60/20/20 하이브리드 작업 큐를 자동 생성합니다.",
+        btnAff: "💰 제휴 ID 설정",
+        btnShare: "🔗 링크 공유",
+        pEcomT: "🔦 이커머스 / 퍼포먼스 광고", pEcomTag: "외주비 80% 절감", pEcomD: "초반 3초 후킹은 최상위 API, 배경 B-Roll은 로컬 GPU로 처리해 제작비를 대폭 절감.",
+        pDramaT: "🎬 AI 숏드라마 / 웹툰 애니", pDramaTag: "회당 단가 압축", pDramaD: "Flux 캐릭터 일관성 유지 + 로컬 ComfyUI 병렬 렌더링 + 클라우드 GPU 버스트.",
+        pStoreT: "🏪 프랜차이즈 / 로컬 매장", pStoreTag: "아바타 + 쇼케이스", pStoreD: "촬영 부담 없이 HeyGen 아바타와 제품 이미지 영상화로 초저비용 대량 콘텐츠 생산.",
+        pIndieT: "💻 1인 크리에이터 / 무자본 시작", pIndieTag: "저위험 테스트", pIndieD: "고가 GPU 구매 전 $0.34/시간 RunPod RTX 4090 클라우드로 수익화 먼저 검증.",
+        tabQuick: "⚡ 빠른 사장님 모드 (ROI 계산)",
+        tabCustom: "🛠️ 아키텍트 모드 (멀티 장비 & 전체 모델)",
+        btnOpt: "✨ AI 최저비용 아키텍처 자동 추천",
+        h2Workload: "1. 비즈니스 ROI 및 월간 제작 목표",
+        lblHumanCost: "기존 외주/촬영 단가 ($/편)",
+        lblProfitOrder: "주문당 평균 순이익 ($/건)",
+        lblVideos: "월간 완성 영상 수",
+        lblSec: "편당 영상 길이",
+        lblRetry: "재생성 배수 (실패율)",
+        lblRes: "목표 해상도",
+        lblMaxHrs: "일 최대 가동시간 (h/일)",
+        h2Recipe: "2. 퀄리티 방어 하이브리드 레시피 (60/20/20)",
+        h2RecipeSub: "품질 유지하며 75% 절감",
+        lblShotApi: "초반 3초 핵심 클로즈업 (상용 API)",
+        lblShotAvatar: "인물 나레이션 / 설명 (AI 아바타)",
+        lblShotLocal: "일반 B-Roll / 배경 (로컬 무료)",
+        lblPipeline: "전후처리 풀 파이프라인 추가",
+        lblHwQuick: "비교용 로컬 하드웨어",
+        h2Fleet: "3. 내 멀티 장비 클러스터 (My Fleet)",
+        h2FleetSub: "VRAM 기반 자동 역할 배정",
+        btnAddDev: "+ 로컬 장비 추가 (Mac / RTX PC)",
+        lblClusterMode: "클러스터 스케줄링 모드",
+        lblAmort: "감가(개월)", lblResale: "잔존가%", lblElec: "전기$/kWh",
+        h2Model: "4. 로컬 오픈소스 모델 및 양자화",
+        lblLocalModel: "로컬 영상 모델", lblQuant: "양자화 정밀도",
+        h2Matrix: "5. 비교 플랫폼 선택",
+        vsLabel: "기존 외주 대비 연간 순절감액",
+        h3Topo: "🧠 멀티 장비 최적 역할 분배표 (Who Does What)",
+        h3TopoSub: "VRAM 및 아키텍처별 자동 배정",
+        h3Dispatch: "🎬 실전 디스패처: 영상 1편을 각 PC로 즉시 컷 분배",
+        h3DispatchSub: "장비별 프롬프트 & JSON 큐 생성",
+        optT1: "🔦 사례 1: 3000루멘 전술 손전등 폭우 테스트 광고",
+        optT2: "🖨️ 사례 2: 대형 인쇄소 고속 출력 & 금박 공정 홍보",
+        optT3: "⚔️ 사례 3: 판타지 AI 애니메이션 1화 오프닝 씬",
+        btnDispatch: "⚡ 컷 다시 분배",
+        btnDlJson: "📥 큐 JSON 저장",
+        sth: ["컷 / 초", "레시피 라우팅", "할당 장비 / API", "프롬프트 및 퀄리티 방어 포인트", "예상 비용"],
+        kl: ["기존 외주 월비용", "하이브리드 월비용", "영상 1편 실질 단가", "하드웨어 순회수기간", "로컬 일일 가동부하"],
+        h3Bar: "📊 월간 총비용 비교",
+        h3Tco: "📈 24개월 누적 TCO 손익분기 곡선",
+        th: ["스택 / 플랫폼", "VRAM & SLA", "월 비용", "편당 비용", "손익분기 주문수", "월 시간(일)", "출처", "바로가기"],
+        m1T: "⚡ 1단계: 클라우드 GPU 버스트 (Affiliate)", m1D: "로컬 대기열 초과 시 RunPod / Vast.ai RTX 4090 ($0.34/h) 즉시 대여.",
+        m2T: "📦 2단계: 멀티노드 배포 키트 ($19 Pro)", m2D: "현재 장비 조합에 맞춘 ComfyUI 분산 실행 스크립트 및 ROI 보고서 생성.",
+        m2Btn: "분산 스크립트 & ROI 보고서 생성",
+        m3T: "🤖 3단계: GEO 롱테일 비교 페이지 자동화", m3D: "Google 및 AI 검색(ChatGPT/Perplexity) 인용을 위한 비교 페이지 자동 갱신.",
+        m3Btn: "GEO 페이지 목록 보기",
+        owned: "보유중(0원)", newBuy: "신규구매",
+        unitVid: "편", unitOrder: "건", unitMo: "개월", perMo: "/월", perYr: "/년",
+        bestTag: "최적 ROI", oomTag: "VRAM 부족", slaOverTag: "시간 초과",
+        ctaHybrid: "레시피 저장", ctaLocal: "역할 보기", ctaCloud: "GPU 대여 →", ctaSaas: "요금제 →", ctaHuman: "대체 대상",
+        humanRowName: "👥 기존 실사 촬영 / 영상 외주팀", humanBadge: "일정 지연 · 고비용",
+        affTitle: "💰 제휴 파트너 ID 설정", affDesc: "각 플랫폼 추천인 코드를 입력하면 모든 버튼에 자동 적용됩니다:",
+        copyDone: "클립보드에 복사되었습니다!",
+        topics: {
+          flashlight: "3000루멘 전술 손전등 폭우 300m 원거리 조사 테스트, 알루미늄 방수 매크로 클로즈업",
+          printshop: "대형 상업 인쇄 스튜디오, 고속 디지털 인쇄기 및 고급 화보집 금박 공정 쇼케이스",
+          manga: "판타지 무협 AI 애니 1화: 폭풍우 절벽에서 고대 검을 뽑아 구름을 가르는 오프닝"
+        }
+      },
+      es: {
+        htmlLang: "es",
+        defaultCurrency: "USD",
+        pageTitle: "Calculadora ROI de Video IA y Cómputo Local (2026)",
+        badge: "v5.5 Edición Global GEO · ROI + Clúster Multi-Equipo + Despachador",
+        h1: "Motor de ROI de Video IA y Clúster Local (2026)",
+        sub: "Calcula ahorros anuales frente a agencias tradicionales, asigna roles entre tus Mac Studio / RTX y divide cada video con la receta híbrida 60/20/20.",
+        btnAff: "💰 IDs Afiliado",
+        btnShare: "🔗 Compartir",
+        pEcomT: "🔦 E-Commerce / Anuncios", pEcomTag: "Reemplaza Agencias", pEcomD: "Recorta 80% en costos de video: API top para el gancho de 3s y GPU local para B-roll.",
+        pDramaT: "🎬 Estudio AI Drama / Anime", pDramaTag: "Bajo Costo/Ep", pDramaD: "Evita facturas SaaS enormes: consistencia con Flux + ComfyUI local + ráfagas en nube.",
+        pStoreT: "🏪 Negocios Locales / Tiendas", pStoreTag: "Avatar + Producto", pStoreD: "Sin grabaciones lentas: combina avatares HeyGen con demos de producto a centavos.",
+        pIndieT: "💻 Creador Solo / Cero CapEx", pIndieTag: "Inicio Sin Riesgo", pIndieD: "Empieza sin comprar GPU: combina tu portátil con RunPod RTX 4090 a $0.34/h.",
+        tabQuick: "⚡ Modo Rápido (ROI de Negocio)",
+        tabCustom: "🛠️ Modo Arquitecto (Flota Multi-Equipo)",
+        btnOpt: "✨ Auto-Optimizar Menor Costo",
+        h2Workload: "1. ROI de Negocio y Producción Mensual",
+        lblHumanCost: "Costo Agencia Tradicional ($/vid)",
+        lblProfitOrder: "Margen Bruto ($/pedido)",
+        lblVideos: "Videos Terminados / Mes",
+        lblSec: "Duración Promedio",
+        lblRetry: "Multiplicador de Intentos",
+        lblRes: "Resolución",
+        lblMaxHrs: "Máx. Render Diario (h/día)",
+        h2Recipe: "2. Receta Híbrida Anti-Fallos (60/20/20)",
+        h2RecipeSub: "Ahorra 75% sin perder calidad",
+        lblShotApi: "Gancho 3s / Planos Difíciles (API Top)",
+        lblShotAvatar: "Presentador / Voz (Avatar IA)",
+        lblShotLocal: "B-Roll y Ambiente (ComfyUI Local)",
+        lblPipeline: "Extras de Flujo Completo",
+        lblHwQuick: "Hardware Local de Referencia",
+        h2Fleet: "3. Mi Flota Multi-Equipo",
+        h2FleetSub: "Asignación automática por VRAM",
+        btnAddDev: "+ Añadir Equipo Local (Mac / RTX)",
+        lblClusterMode: "Modo de Clúster",
+        lblAmort: "Amort (m)", lblResale: "Reventa %", lblElec: "Luz $/kWh",
+        h2Model: "4. Modelo Local y Cuantización",
+        lblLocalModel: "Modelo de Video Local", lblQuant: "Precisión",
+        h2Matrix: "5. Comparar Plataformas",
+        vsLabel: "Ahorro Anual vs. Agencia Tradicional",
+        h3Topo: "🧠 Asignación Automática de Roles por Equipo",
+        h3TopoSub: "Según VRAM y arquitectura",
+        h3Dispatch: "🎬 Despachador en Vivo: Divide 1 Video en Tus Equipos",
+        h3DispatchSub: "Genera prompts y cola JSON",
+        optT1: "🔦 Caso 1: Anuncio Linterna Táctica 3000lm en Tormenta",
+        optT2: "🖨️ Caso 2: Imprenta Comercial Alta Velocidad",
+        optT3: "⚔️ Caso 3: Escena Inicial de Anime Fantástico IA",
+        btnDispatch: "⚡ Dividir Tomas",
+        btnDlJson: "📥 Exportar JSON",
+        sth: ["Toma / Seg", "Nivel de Receta", "Equipo / API Asignado", "Prompt Visual y Control de Calidad", "Costo Est."],
+        kl: ["Agencia Tradicional / Mes", "Receta Híbrida / Mes", "Costo Real / Video", "Retorno Hardware", "Carga Diaria Local"],
+        h3Bar: "📊 Comparación de Costo Mensual",
+        h3Tco: "📈 Curva TCO Acumulada a 24 Meses",
+        th: ["Plataforma / Stack", "VRAM y SLA", "Costo Mensual", "Costo / Video", "Pedidos Equilibrio", "Horas (Día)", "Fuente", "Acción"],
+        m1T: "⚡ Nivel 1: Ráfagas GPU en Nube (Afiliado)", m1D: "Alquila RunPod / Vast.ai RTX 4090 ($0.34/h) por segundo cuando tu cola local se llene.",
+        m2T: "📦 Nivel 2: Kit Multi-Nodo ($19 Pro)", m2D: "Exporta scripts LAN de ComfyUI, flujo 60/20/20 y reporte ROI ejecutivo.",
+        m2Btn: "Generar Scripts y Reporte ROI",
+        m3T: "🤖 Nivel 3: Páginas Comparativas GEO", m3D: "Páginas compare/ y llms.txt actualizadas diariamente para Google y motores IA.",
+        m3Btn: "Ver Lista de Páginas GEO",
+        owned: "Propio ($0)", newBuy: "Nuevo",
+        unitVid: "vids", unitOrder: "pedidos", unitMo: "m", perMo: "/mes", perYr: "/año",
+        bestTag: "Mejor ROI", oomTag: "Sin VRAM", slaOverTag: "Excede SLA",
+        ctaHybrid: "Exportar", ctaLocal: "Ver Roles", ctaCloud: "Alquilar GPU →", ctaSaas: "Ver Plan →", ctaHuman: "Reemplazado",
+        humanRowName: "👥 Agencia de Video Tradicional", humanBadge: "Entrega lenta",
+        affTitle: "💰 Configurador de IDs de Afiliado", affDesc: "Introduce tus códigos de referido para etiquetar todos los enlaces:",
+        copyDone: "¡Copiado al portapapeles!",
+        topics: {
+          flashlight: "Linterna táctica 3000 lúmenes prueba en tormenta 300m, macro de aluminio resistente al agua",
+          printshop: "Estudio de impresión comercial de alta velocidad con acabado de lámina dorada",
+          manga: "Anime fantástico episodio 1: héroe desenvaina espada dorada en acantilado bajo tormenta"
+        }
+      }
+    };
+
+    const FX = { USD: { sym: "$", rate: 1, dec: 2 }, CNY: { sym: "¥", rate: 7.25, dec: 0 }, JPY: { sym: "¥", rate: 154, dec: 0 }, KRW: { sym: "₩", rate: 1390, dec: 0 } };
+    const CURR_ORDER = ["USD", "CNY", "JPY", "KRW"];
+
     const DATA = {
       video_saas: [
         { id: "kling_std", name: "Kling AI 3.0/4.0 (Standard)", cost_720p: 0.11, cost_1080p: 0.21, cost_4k: 0.42, affiliate_url: "https://kling.ai/dev/pricing", source_url: "https://www.zemith.com/en/learn/kling-pricing", source_name: "Zemith 2026", default_quick: false },
         { id: "kling_pro", name: "Kling AI 4.0 (Pro High-Motion)", cost_720p: 0.18, cost_1080p: 0.28, cost_4k: 0.55, affiliate_url: "https://kling.ai/dev/pricing", source_url: "https://www.zemith.com/en/learn/kling-pricing", source_name: "Zemith 2026", default_quick: true },
         { id: "runway_gen45", name: "Runway Gen-4.5 (Director Mode)", cost_720p: 0.24, cost_1080p: 0.29, cost_4k: 0.45, affiliate_url: "https://runway.com/pricing", source_url: "https://academy.techpresso.co/reviews/is-runway-worth-it", source_name: "Techpresso 2026", default_quick: true },
         { id: "veo3_api", name: "Google Veo 3.0/3.1 (Vertex API)", cost_720p: 0.40, cost_1080p: 0.40, cost_4k: 0.60, affiliate_url: "https://aistudio.google.com/docs/veo", source_url: "https://models.litellm.ai/models/veo-3.0-generate-001", source_name: "LiteLLM 2026", default_quick: true },
-        { id: "heygen_avatar_v", name: "HeyGen Avatar IV/V (精品数字人)", cost_720p: 0.016, cost_1080p: 0.016, cost_4k: 0.032, affiliate_url: "https://www.heygen.com/pricing", source_url: "https://usevelo.ai/blog/heygen-pricing/", source_name: "Velo 2026", default_quick: true }
+        { id: "heygen_avatar_v", name: "HeyGen Avatar IV/V", cost_720p: 0.016, cost_1080p: 0.016, cost_4k: 0.032, affiliate_url: "https://www.heygen.com/pricing", source_url: "https://usevelo.ai/blog/heygen-pricing/", source_name: "Velo 2026", default_quick: true }
       ],
       local_models: [
         { id: "wan_14b", name: "Wan 2.1/3.0 (14B Video)", vram_fp16: 28, vram_fp8: 15, vram_int4: 10, sec_720p: 160, sec_1080p: 340, sec_4k: 780 },
         { id: "hunyuan_video", name: "HunyuanVideo 13B", vram_fp16: 26, vram_fp8: 14, vram_int4: 9.5, sec_720p: 180, sec_1080p: 360, sec_4k: 820 },
-        { id: "flux_dev_video_pipe", name: "Flux.1 Dev + I2V 漫剧流", vram_fp16: 24, vram_fp8: 12, vram_int4: 8, sec_720p: 95, sec_1080p: 190, sec_4k: 420 },
-        { id: "qwen_72b_llm", name: "Qwen 2.5/3 72B (Agent/脚本)", vram_fp16: 144, vram_fp8: 76, vram_int4: 42, sec_720p: 45, sec_1080p: 60, sec_4k: 90 }
+        { id: "flux_dev_video_pipe", name: "Flux.1 Dev + I2V Pipe", vram_fp16: 24, vram_fp8: 12, vram_int4: 8, sec_720p: 95, sec_1080p: 190, sec_4k: 420 },
+        { id: "qwen_72b_llm", name: "Qwen 2.5/3 72B (Agent)", vram_fp16: 144, vram_fp8: 76, vram_int4: 42, sec_720p: 45, sec_1080p: 60, sec_4k: 90 }
       ],
       cloud_gpu: [
         { id: "runpod_4090_comm", name: "RunPod RTX 4090 (24GB Community)", vram_gb: 24, speed_mult: 1.0, hourly_rate: 0.34, affiliate_url: "https://www.runpod.io/gpu-models/rtx-4090", source_url: "https://www.layer3labs.io/guides/is-runpod-worth-it", source_name: "Layer3Labs 2026", default_quick: true },
@@ -915,57 +1277,98 @@
         { id: "runpod_h100_80", name: "RunPod H100 (80GB SXM)", vram_gb: 80, speed_mult: 2.6, hourly_rate: 3.99, affiliate_url: "https://www.runpod.io/gpu-models/h100-sxm", source_url: "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute", source_name: "ThunderCompute 2026", default_quick: true }
       ],
       local_hardware: [
-        { id: "mac_mini_m4_24", name: "Mac mini M4 Pro (24GB Unified)", arch: "apple_mini", vram_gb: 18, speed_mult: 0.18, capex_usd: 1399, watts_load: 65, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://www.apple.com/mac-studio/", source_name: "Apple Silicon Ref" },
-        { id: "mac_m2_max_64", name: "Mac Studio M2 Max (64GB Unified)", arch: "apple_studio", vram_gb: 48, speed_mult: 0.36, capex_usd: 1799, watts_load: 115, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://www.apple.com/mac-studio/", source_name: "Apple Mac Studio" },
-        { id: "mac_m4_max_64", name: "Mac Studio M4 Max (64GB Unified)", arch: "apple_studio", vram_gb: 50, speed_mult: 0.45, capex_usd: 2399, watts_load: 140, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://www.techrepublic.com/article/news-apple-mac-studio-cheat-sheet/", source_name: "TechRepublic 2026" },
-        { id: "mac_m4_max_128", name: "Mac Studio M4 Max (128GB Unified)", arch: "apple_studio", vram_gb: 104, speed_mult: 0.48, capex_usd: 3199, watts_load: 145, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://support.apple.com/en-us/122211", source_name: "Apple Specs 2026" },
-        { id: "mac_m3_ultra_96", name: "Mac Studio M3 Ultra (96GB Unified)", arch: "apple_studio", vram_gb: 76, speed_mult: 0.72, capex_usd: 3999, watts_load: 210, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://www.techrepublic.com/article/news-apple-mac-studio-cheat-sheet/", source_name: "TechRepublic 2026" },
-        { id: "mac_m3_ultra_256", name: "Mac Studio M3 Ultra (256GB Unified)", arch: "apple_studio", vram_gb: 210, speed_mult: 0.75, capex_usd: 5599, watts_load: 230, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://support.apple.com/en-us/122211", source_name: "Apple Specs 2026" },
+        { id: "mac_mini_m4_24", name: "Mac mini M4 Pro (24GB)", arch: "apple_mini", vram_gb: 18, speed_mult: 0.18, capex_usd: 1399, watts_load: 65, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://www.apple.com/mac-studio/", source_name: "Apple Silicon" },
+        { id: "mac_m2_max_64", name: "Mac Studio M2 Max (64GB)", arch: "apple_studio", vram_gb: 48, speed_mult: 0.36, capex_usd: 1799, watts_load: 115, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://www.apple.com/mac-studio/", source_name: "Apple Studio" },
+        { id: "mac_m4_max_64", name: "Mac Studio M4 Max (64GB)", arch: "apple_studio", vram_gb: 50, speed_mult: 0.45, capex_usd: 2399, watts_load: 140, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://www.techrepublic.com/article/news-apple-mac-studio-cheat-sheet/", source_name: "TechRepublic 2026" },
+        { id: "mac_m4_max_128", name: "Mac Studio M4 Max (128GB)", arch: "apple_studio", vram_gb: 104, speed_mult: 0.48, capex_usd: 3199, watts_load: 145, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://support.apple.com/en-us/122211", source_name: "Apple Specs 2026" },
+        { id: "mac_m3_ultra_96", name: "Mac Studio M3 Ultra (96GB)", arch: "apple_studio", vram_gb: 76, speed_mult: 0.72, capex_usd: 3999, watts_load: 210, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://www.techrepublic.com/article/news-apple-mac-studio-cheat-sheet/", source_name: "TechRepublic 2026" },
+        { id: "mac_m3_ultra_256", name: "Mac Studio M3 Ultra (256GB)", arch: "apple_studio", vram_gb: 210, speed_mult: 0.75, capex_usd: 5599, watts_load: 230, affiliate_url: "https://www.apple.com/mac-studio/", source_url: "https://support.apple.com/en-us/122211", source_name: "Apple Specs 2026" },
         { id: "pc_rtx_3060_12", name: "Desktop PC RTX 3060 (12GB)", arch: "cuda_entry", vram_gb: 12, speed_mult: 0.25, capex_usd: 850, watts_load: 260, affiliate_url: "https://vast.ai/pricing/gpu/RTX-3090", source_url: "https://vast.ai/pricing", source_name: "GPU Spec Ref" },
         { id: "pc_rtx_4090_24", name: "Workstation RTX 4090 (24GB)", arch: "cuda_pro", vram_gb: 24, speed_mult: 1.0, capex_usd: 2600, watts_load: 500, affiliate_url: "https://www.runpod.io/gpu-models/rtx-4090", source_url: "https://www.layer3labs.io/guides/is-runpod-worth-it", source_name: "Layer3Labs 2026" },
         { id: "pc_rtx_5090_32", name: "Workstation RTX 5090 (32GB)", arch: "cuda_pro", vram_gb: 32, speed_mult: 1.45, capex_usd: 3600, watts_load: 600, affiliate_url: "https://vast.ai/pricing/gpu/RTX-5090", source_url: "https://vast.ai/pricing/gpu/RTX-5090", source_name: "Vast.ai 5090" }
       ]
     };
 
+    let currentLang = "zh";
     let currentMode = "quick";
     let currency = "CNY";
-    let lang = "ZH";
-    const FX_CNY = 7.25;
     let lastReportSummary = "";
     let lastDispatchedQueue = [];
     let affConfig = { runpod: "", vast: "", kling: "", heygen: "" };
-
     let userFleet = [
       { hwId: "mac_m2_max_64", qty: 1, owned: "owned" },
       { hwId: "mac_mini_m4_24", qty: 1, owned: "owned" },
       { hwId: "pc_rtx_3060_12", qty: 1, owned: "owned" }
     ];
 
-    function fmtMoney(usdVal, decimals = 0) {
-      if (currency === "CNY") return "¥" + (usdVal * FX_CNY).toFixed(decimals);
-      return "$" + usdVal.toFixed(decimals);
+    function t() { return I18N[currentLang] || I18N.en; }
+
+    function fmtMoney(usdVal, forceDec = null) {
+      const f = FX[currency] || FX.USD;
+      const d = forceDec !== null ? forceDec : f.dec;
+      const num = usdVal * f.rate;
+      return f.sym + (d === 0 ? Math.round(num).toLocaleString() : num.toFixed(d));
     }
 
-    function toggleCurrency() {
-      currency = currency === "USD" ? "CNY" : "USD";
-      document.getElementById("btn-curr").textContent = currency === "USD" ? "💱 币种: USD ($)" : "💱 币种: CNY (¥)";
-      document.getElementById("curr-label").textContent = currency + " / 月";
+    function applyStaticTranslations() {
+      const L = t();
+      document.documentElement.lang = L.htmlLang;
+      document.title = L.pageTitle;
+      const map = {
+        "ui-badge": L.badge, "ui-h1": L.h1, "ui-sub": L.sub,
+        "btn-aff": L.btnAff, "btn-share": L.btnShare,
+        "p-ecom-t": L.pEcomT, "p-ecom-tag": L.pEcomTag, "p-ecom-d": L.pEcomD,
+        "p-drama-t": L.pDramaT, "p-drama-tag": L.pDramaTag, "p-drama-d": L.pDramaD,
+        "p-store-t": L.pStoreT, "p-store-tag": L.pStoreTag, "p-store-d": L.pStoreD,
+        "p-indie-t": L.pIndieT, "p-indie-tag": L.pIndieTag, "p-indie-d": L.pIndieD,
+        "tab-quick": L.tabQuick, "tab-custom": L.tabCustom, "btn-opt": L.btnOpt,
+        "h2-workload": L.h2Workload, "lbl-human-cost": L.lblHumanCost, "lbl-profit-order": L.lblProfitOrder,
+        "lbl-videos": L.lblVideos, "lbl-sec": L.lblSec, "lbl-retry": L.lblRetry,
+        "lbl-res": L.lblRes, "lbl-max-hrs": L.lblMaxHrs,
+        "h2-recipe": L.h2Recipe, "h2-recipe-sub": L.h2RecipeSub,
+        "lbl-shot-api": L.lblShotApi, "lbl-shot-avatar": L.lblShotAvatar, "lbl-shot-local": L.lblShotLocal,
+        "lbl-pipeline": L.lblPipeline, "lbl-hw-quick": L.lblHwQuick,
+        "h2-fleet": L.h2Fleet, "h2-fleet-sub": L.h2FleetSub, "btn-add-dev": L.btnAddDev,
+        "lbl-cluster-mode": L.lblClusterMode, "lbl-amort": L.lblAmort, "lbl-resale": L.lblResale, "lbl-elec": L.lblElec,
+        "h2-model": L.h2Model, "lbl-local-model": L.lblLocalModel, "lbl-quant": L.lblQuant, "h2-matrix": L.h2Matrix,
+        "vs-label": L.vsLabel, "h3-topo": L.h3Topo, "h3-topo-sub": L.h3TopoSub,
+        "h3-dispatch": L.h3Dispatch, "h3-dispatch-sub": L.h3DispatchSub,
+        "opt-topic-1": L.optT1, "opt-topic-2": L.optT2, "opt-topic-3": L.optT3,
+        "btn-dispatch": L.btnDispatch, "btn-dl-json": L.btnDlJson,
+        "h3-bar": L.h3Bar, "h3-tco": L.h3Tco,
+        "m1-t": L.m1T, "m1-d": L.m1D, "m2-t": L.m2T, "m2-d": L.m2D, "m2-btn": L.m2Btn,
+        "m3-t": L.m3T, "m3-d": L.m3D, "m3-btn": L.m3Btn,
+        "aff-modal-title": L.affTitle, "aff-modal-desc": L.affDesc
+      };
+      Object.entries(map).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      });
+      L.sth.forEach((txt, i) => { const el = document.getElementById("sth-" + (i+1)); if (el) el.textContent = txt; });
+      L.kl.forEach((txt, i) => { const el = document.getElementById("kl-" + (i+1)); if (el) el.textContent = txt; });
+      L.th.forEach((txt, i) => { const el = document.getElementById("th-" + (i+1)); if (el) el.textContent = txt; });
+      document.getElementById("btn-curr").textContent = `💱 ${currency} (${FX[currency].sym})`;
+      document.getElementById("curr-label").textContent = currency + L.perMo;
+      document.getElementById("geo-footer").innerHTML = `<strong>GEO Verified 2026 Sources:</strong> <a href="https://www.zemith.com/en/learn/kling-pricing" target="_blank">Kling AI</a> · <a href="https://academy.techpresso.co/reviews/is-runway-worth-it" target="_blank">Runway Gen-4.5</a> · <a href="https://models.litellm.ai/models/veo-3.0-generate-001" target="_blank">Google Veo 3.0 API</a> · <a href="https://usevelo.ai/blog/heygen-pricing/" target="_blank">HeyGen</a> · <a href="https://www.layer3labs.io/guides/is-runpod-worth-it" target="_blank">RunPod</a> · <a href="https://www.activepieces.com/blog/vast-ai-gpu-pricing-per-hour-in-2026-and-extra-fees" target="_blank">Vast.ai</a> · <a href="https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute" target="_blank">ThunderCompute</a> · <a href="https://www.techrepublic.com/article/news-apple-mac-studio-cheat-sheet/" target="_blank">Apple Mac Studio</a>`;
+    }
+
+    function setLanguage(langCode, keepCurr = false) {
+      if (!I18N[langCode]) langCode = "en";
+      currentLang = langCode;
+      document.getElementById("sel-lang").value = langCode;
+      if (!keepCurr) currency = I18N[langCode].defaultCurrency;
+      localStorage.setItem("geo_lang", langCode);
+      onTopicPresetChange();
+      applyStaticTranslations();
+      renderFleet();
       calculate();
     }
 
-    function toggleLang() {
-      lang = lang === "ZH" ? "EN" : "ZH";
-      if (lang === "EN") {
-        document.getElementById("ui-badge").textContent = "v5.0 Production Hub · ROI Calculator + Multi-Node Topology + Live Shot Dispatcher";
-        document.getElementById("ui-h1").textContent = "AI Video ROI & Multi-Node Shot Dispatcher Engine (2026)";
-        document.getElementById("ui-sub").textContent = "Calculate savings vs. human video teams, auto-assign workloads across Mac Studio + RTX GPUs, and dispatch 60/20/20 hybrid shot queues.";
-        currency = "USD";
-        document.getElementById("btn-curr").textContent = "💱 Currency: USD ($)";
-      } else {
-        document.getElementById("ui-badge").textContent = "v5.0 生产闭环终极版 · 商业算账 + 多机排班 + 实时拆镜派单 + 全球联盟收租配置器";
-        document.getElementById("ui-h1").textContent = "AI 视频商业回本与多机智能拆镜派单中枢 (A+C)";
-        document.getElementById("ui-sub").textContent = "从「算省多少外包钱」→「手头多台机器谁干什么活」→「直接把一条视频按 60/20/20 防穿帮配方拆成每台电脑的 ComfyUI / API 执行队列 JSON」。";
-      }
+    function cycleCurrency() {
+      const idx = CURR_ORDER.indexOf(currency);
+      currency = CURR_ORDER[(idx + 1) % CURR_ORDER.length];
+      document.getElementById("btn-curr").textContent = `💱 ${currency} (${FX[currency].sym})`;
+      document.getElementById("curr-label").textContent = currency + t().perMo;
       calculate();
     }
 
@@ -994,31 +1397,23 @@
       document.getElementById("banner-runpod-link").href = decorateAffiliateUrl("https://www.runpod.io/gpu-models/rtx-4090");
       document.getElementById("aff-modal").classList.add("hidden");
       calculate();
-      alert("已保存！全站所有联盟跳转按钮已自动挂载你的推广分润码。");
     }
 
     function onTopicPresetChange() {
       const p = document.getElementById("in-topic-preset").value;
-      const input = document.getElementById("in-custom-topic");
-      if (p === "flashlight") {
-        input.value = "3000流明战术手电筒暴雨夜300米远射实测，铝合金机身散热与防水特写";
-      } else if (p === "printshop") {
-        input.value = "300平连锁快印旗舰店，海德堡数码印刷机高速出纸与精装画册烫金工艺实拍感展示";
-      } else {
-        input.value = "奇幻修仙漫剧第一集：少年在雷雨悬崖拔出暗金古剑，剑气劈开云层特效";
-      }
+      document.getElementById("in-custom-topic").value = t().topics[p] || t().topics.flashlight;
       renderShotDispatcher();
     }
 
     function renderShotDispatcher() {
-      const topic = document.getElementById("in-custom-topic").value || "高转化商业短视频";
+      const L = t();
+      const topic = document.getElementById("in-custom-topic").value || L.topics.flashlight;
       const totalSec = Number(document.getElementById("in-sec").value) || 45;
       const retry = Number(document.getElementById("in-retry").value) || 3.0;
       const shotApiPct = Number(document.getElementById("in-shot-api").value) || 20;
       const shotAvatarPct = Number(document.getElementById("in-shot-avatar").value) || 20;
       const shotLocalPct = Math.max(0, 100 - shotApiPct - shotAvatarPct);
 
-      // 找出用户集群里的具体机器名
       const activeList = currentMode === "quick"
         ? [{ hwId: document.getElementById("in-hw-quick").value, qty: 1 }]
         : userFleet;
@@ -1032,37 +1427,34 @@
       const localSec1 = Math.max(5, Math.round((totalSec - apiSec - avatarSec) * 0.5));
       const localSec2 = Math.max(5, totalSec - apiSec - avatarSec - localSec1);
 
+      const isZh = currentLang === "zh";
       const shots = [
         {
-          id: "镜1 (0~" + apiSec + "s)",
-          sec: apiSec,
-          badge: '<span class="shot-badge-api">黄金前3秒特写 (顶级API ' + shotApiPct + '%)</span>',
-          node: "☁️ Kling 4.0 Pro / Veo 3.0 API (由 " + miniController.split(" (")[0] + " 自动发起调用)",
-          prompt: `【强物理抓人钩子】${topic.slice(0, 22)}极致微距光影特写，真实光学镜头景深，水滴/金属高光反射细腻，严禁塑料油腻感 (--no plastic sheen, morphing)`,
+          id: `#1 (0-${apiSec}s)`,
+          badge: `<span class="shot-badge-api">Hook API (${shotApiPct}%)</span>`,
+          node: `☁️ Kling 4.0 Pro / Veo 3.0 (${miniController.split(" (")[0]})`,
+          prompt: isZh ? `【前3秒钩子】${topic.slice(0,22)}极致微距光影特写，真实光学景深 (--no plastic sheen)` : `[3s Hook] Macro photorealistic shot of: ${topic.slice(0,48)}, natural optical lighting (--no plastic morphing)`,
           costUsd: apiSec * retry * 0.28
         },
         {
-          id: "镜2 (" + apiSec + "~" + (apiSec + avatarSec) + "s)",
-          sec: avatarSec,
-          badge: '<span class="shot-badge-avatar">痛点口播背书 (数字人 ' + shotAvatarPct + '%)</span>',
-          node: "🗣️ HeyGen Avatar V / 本地 CosyVoice (" + cudaHelper.split(" (")[0] + " 合成音频)",
-          prompt: `【真人信任感背书】店长/主理人直视镜头沉稳讲解核心参数与避坑结论，口型毫秒级对齐，自然呼吸微表情`,
+          id: `#2 (${apiSec}-${apiSec+avatarSec}s)`,
+          badge: `<span class="shot-badge-avatar">Avatar (${shotAvatarPct}%)</span>`,
+          node: `🗣️ HeyGen Avatar V / CosyVoice (${cudaHelper.split(" (")[0]})`,
+          prompt: isZh ? `【口播背书】主理人直视镜头拆解核心痛点与参数，口型毫秒对齐` : `[Spokesperson] Direct-to-camera value breakdown, natural lip-sync & micro-expressions`,
           costUsd: avatarSec * 1.2 * 0.016
         },
         {
-          id: "镜3 (" + (apiSec + avatarSec) + "~" + (apiSec + avatarSec + localSec1) + "s)",
-          sec: localSec1,
-          badge: '<span class="shot-badge-local">场景多维展开 (本地集群 ' + Math.round(shotLocalPct/2) + '%)</span>',
-          node: "🖥️ 本地节点 1: " + studioNode.split(" (")[0] + " (跑 Wan 14B FP8 队列)",
-          prompt: `【中景实测铺垫】围绕「${topic.slice(0, 18)}」的多角度使用场景跟拍镜头，自然环境光过渡，稳定运镜 (Camera smoothly pans, photorealistic RAW)`,
+          id: `#3 (${apiSec+avatarSec}-${apiSec+avatarSec+localSec1}s)`,
+          badge: `<span class="shot-badge-local">Local (${Math.round(shotLocalPct/2)}%)</span>`,
+          node: `🖥️ ${studioNode.split(" (")[0]} (Wan 14B FP8)`,
+          prompt: isZh ? `【多维实测】围绕「${topic.slice(0,18)}」稳定跟拍运镜，自然光过渡` : `[B-Roll] Smooth cinematic pan showcasing: ${topic.slice(0,44)}, RAW natural tones`,
           costUsd: (localSec1 / 5) * retry * 0.004
         },
         {
-          id: "镜4 (" + (apiSec + avatarSec + localSec1) + "~" + totalSec + "s)",
-          sec: localSec2,
-          badge: '<span class="shot-badge-local">细节对比与收尾促单 (本地集群 ' + (shotLocalPct - Math.round(shotLocalPct/2)) + '%)</span>',
-          node: "🎨 本地节点 2: " + cudaHelper.split(" (")[0] + " (Flux首帧) + " + miniController.split(" (")[0] + " (FFmpeg自动压片)",
-          prompt: `【质感收尾+行动号召】产品细节定格与多维参数字幕卡叠加，由中控机自动混音合成成片并推送至待发布夹`,
+          id: `#4 (${apiSec+avatarSec+localSec1}-${totalSec}s)`,
+          badge: `<span class="shot-badge-local">Local (${shotLocalPct - Math.round(shotLocalPct/2)}%)</span>`,
+          node: `🎨 ${cudaHelper.split(" (")[0]} (Flux) + ${miniController.split(" (")[0]} (FFmpeg)`,
+          prompt: isZh ? `【收尾促单】细节定格 + 参数字幕卡叠加，中控机自动合成压片` : `[CTA Outro] Hero product freeze-frame + spec overlay, auto-muxed via FFmpeg`,
           costUsd: (localSec2 / 5) * retry * 0.003
         }
       ];
@@ -1074,14 +1466,16 @@
           <td>${s.badge}</td>
           <td style="color:var(--accent);">${s.node}</td>
           <td>${s.prompt}</td>
-          <td><strong>${fmtMoney(s.costUsd, 2)}</strong></td>
+          <td><strong>${fmtMoney(s.costUsd)}</strong></td>
         </tr>
       `).join("");
     }
 
     function downloadClusterJson() {
       const payload = {
-        generated_at: "2026-11-18",
+        generated_at: "2026-11-19",
+        language: currentLang,
+        currency: currency,
         topic: document.getElementById("in-custom-topic").value,
         fleet: userFleet,
         dispatched_shots: lastDispatchedQueue
@@ -1133,7 +1527,7 @@
         document.getElementById("in-shot-avatar").value = 50;
         document.getElementById("in-topic-preset").value = "printshop";
         onTopicPresetChange();
-      } else if (p === "indie") {
+      } else {
         document.getElementById("in-human-cost-per-vid").value = 40;
         document.getElementById("in-profit-per-order").value = 12;
         document.getElementById("in-videos").value = 20;
@@ -1147,16 +1541,17 @@
     }
 
     function renderFleet() {
+      const L = t();
       const container = document.getElementById("fleet-container");
       container.innerHTML = userFleet.map((item, idx) => `
         <div class="fleet-item">
           <select onchange="updateFleet(${idx}, 'hwId', this.value)">
             ${DATA.local_hardware.map(h => `<option value="${h.id}" ${h.id === item.hwId ? 'selected' : ''}>${h.name} (${h.vram_gb}G)</option>`).join("")}
           </select>
-          <input type="number" min="1" max="16" value="${item.qty}" title="数量(台/卡)" onchange="updateFleet(${idx}, 'qty', Number(this.value))" />
+          <input type="number" min="1" max="16" value="${item.qty}" onchange="updateFleet(${idx}, 'qty', Number(this.value))" />
           <select onchange="updateFleet(${idx}, 'owned', this.value)">
-            <option value="owned" ${item.owned === 'owned' ? 'selected' : ''}>已有(0折旧)</option>
-            <option value="new" ${item.owned === 'new' ? 'selected' : ''}>新购(算折旧)</option>
+            <option value="owned" ${item.owned === 'owned' ? 'selected' : ''}>${L.owned}</option>
+            <option value="new" ${item.owned === 'new' ? 'selected' : ''}>${L.newBuy}</option>
           </select>
           <button class="btn-del" onclick="removeFleetRow(${idx})">×</button>
         </div>
@@ -1175,11 +1570,8 @@
           { hwId: "pc_rtx_3060_12", qty: 1, owned: "owned" }
         ];
       } else if (type === "dual_mac") {
-        userFleet = [
-          { hwId: "mac_m4_max_128", qty: 1, owned: "new" },
-          { hwId: "mac_m2_max_64", qty: 1, owned: "owned" }
-        ];
-      } else if (type === "dual_4090") {
+        userFleet = [{ hwId: "mac_m4_max_128", qty: 1, owned: "new" }, { hwId: "mac_m2_max_64", qty: 1, owned: "owned" }];
+      } else {
         userFleet = [{ hwId: "pc_rtx_4090_24", qty: 2, owned: "new" }];
       }
       renderFleet();
@@ -1187,34 +1579,41 @@
     }
 
     function renderTopologyCards(reqVram, modelName) {
+      const L = t();
       const box = document.getElementById("topo-cards");
       const activeList = currentMode === "quick"
         ? [{ hwId: document.getElementById("in-hw-quick").value, qty: 1, owned: "owned" }]
         : userFleet;
+      const isZh = currentLang === "zh";
 
       box.innerHTML = activeList.map(item => {
         const hw = DATA.local_hardware.find(h => h.id === item.hwId) || DATA.local_hardware[0];
-        let roleBadge = "";
-        let taskDesc = "";
+        let roleBadge = "", taskDesc = "";
         if (hw.arch === "apple_studio") {
-          roleBadge = "🧠 1号主脑 + 大显存渲染主节点";
-          taskDesc = `凭借 ${hw.vram_gb}GB 大统一内存，常驻运行 Qwen 72B / DeepSeek 拆解分镜脚本，并承担 ${modelName} 主力视频生成队列（不爆显存）。`;
+          roleBadge = isZh ? "🧠 1号主脑 + 大显存渲染主节点" : "🧠 Primary Brain + Large-Memory Node";
+          taskDesc = isZh
+            ? `凭借 ${hw.vram_gb}GB 大统一内存，常驻运行 Qwen 72B 拆镜脚本，并承担 ${modelName} 主力视频队列。`
+            : `${hw.vram_gb}GB unified memory runs 72B script LLMs + primary ${modelName} video queue without OOM.`;
         } else if (hw.arch === "apple_mini") {
-          roleBadge = "🤖 7×24h 极低功耗中控 & 客服/比价节点";
-          taskDesc = `满载仅 ${hw.watts_load}W，24小时不关机运行飞书/抖店 Agent 自动客服、竞品价格巡检、FFmpeg 自动混剪合成与定时发布任务。`;
+          roleBadge = isZh ? "🤖 7×24h 极低功耗中控 & 自动化节点" : "🤖 24/7 Low-Power Orchestrator & Muxer";
+          taskDesc = isZh
+            ? `满载仅 ${hw.watts_load}W，24小时运行 Agent 客服、竞品比价、FFmpeg 自动压片与定时发布。`
+            : `Only ${hw.watts_load}W under load — handles 24/7 API routing, FFmpeg muxing, and scheduled publishing.`;
         } else if (hw.arch === "cuda_entry") {
-          roleBadge = "🎨 CUDA 辅助画师 & 语音/插帧加速卡";
-          taskDesc = hw.vram_gb < reqVram
-            ? `12GB 显存跑不动 ${reqVram}GB 视频主模型，系统已自动将其划拨专门跑 Flux FP8 首帧生图、CosyVoice 语音克隆与 NVENC 极速压片！`
-            : `利用 NVIDIA CUDA 专职并发抽卡首帧图、语音合成与视频超分插帧。`;
+          roleBadge = isZh ? "🎨 CUDA 辅助画师 & 语音/插帧卡" : "🎨 CUDA Keyframe, TTS & NVENC Helper";
+          taskDesc = isZh
+            ? `自动避开 ${reqVram}GB 主视频模型，专职跑 Flux FP8 首帧生图、语音克隆与 NVENC 极速压片。`
+            : `Offloads Flux FP8 keyframe images, local TTS voice cloning, and fast NVENC video encoding.`;
         } else {
-          roleBadge = "🚀 CUDA 主力重装视频抽卡机";
-          taskDesc = `高算力 NVIDIA 显卡 (${hw.vram_gb}GB VRAM)，专职高并发跑 ComfyUI ${modelName} 视频动态生成与 LoRA 训练。`;
+          roleBadge = isZh ? "🚀 CUDA 主力重装视频抽卡机" : "🚀 High-Speed CUDA Video Worker";
+          taskDesc = isZh
+            ? `${hw.vram_gb}GB VRAM 高算力显卡，专职高并发跑 ComfyUI ${modelName} 视频渲染。`
+            : `${hw.vram_gb}GB VRAM dedicated to high-throughput ComfyUI ${modelName} video generation.`;
         }
         return `
           <div class="topo-card">
             <span class="topo-role">${roleBadge}</span>
-            <div class="topo-hw">${hw.name} × ${item.qty}台 (${item.owned === 'owned' ? '已有0折旧' : '新购'})</div>
+            <div class="topo-hw">${hw.name} ×${item.qty} (${item.owned === 'owned' ? L.owned : L.newBuy})</div>
             <div class="topo-task">${taskDesc}</div>
           </div>
         `;
@@ -1296,17 +1695,9 @@
       const netDepreciableCapex = newCapex * (1 - resalePct / 100);
       const monthly = (netDepreciableCapex / amortMonths) + elecCost;
       return {
-        name: `🚀 纯本地多机集群 (${totalNodes}台 · ${runnableNodes}台跑视频)`,
-        vramBadge: clusterMode === "exo" ? `池化 ${totalPooledVram}G` : `最高 ${maxNodeVram}G`,
-        oom: isOom,
-        monthly,
-        hours: totalHours,
-        elecCost,
-        newCapex,
-        netDepreciableCapex,
-        totalSpeedMult,
-        runnableNodes,
-        totalNodes
+        name: `🚀 Local Fleet (${totalNodes} nodes · ${runnableNodes} video-ready)`,
+        vramBadge: clusterMode === "exo" ? `Pool ${totalPooledVram}G` : `Max ${maxNodeVram}G`,
+        oom: isOom, monthly, hours: totalHours, elecCost, newCapex, netDepreciableCapex, totalSpeedMult, runnableNodes, totalNodes
       };
     }
 
@@ -1314,39 +1705,37 @@
       const svg = document.getElementById("tco-svg");
       const months = 24;
       const maxVal = Math.max(saasMonthly * months, cloudGpuMonthly * months, localUpfront + localMonthlyOpex * months, 100);
-      const w = 335, h = 165, padL = 42, padT = 12;
-
+      const w = 330, h = 165, padL = 46, padT = 12;
       function pt(m, val) {
         const x = padL + (m / months) * w;
         const y = padT + h - Math.min(1, val / maxVal) * h;
         return `${x.toFixed(1)},${y.toFixed(1)}`;
       }
-
       let saasPts = [], gpuPts = [], locPts = [];
       for (let m = 0; m <= months; m++) {
         saasPts.push(pt(m, saasMonthly * m));
         gpuPts.push(pt(m, cloudGpuMonthly * m));
         locPts.push(pt(m, localUpfront + localMonthlyOpex * m));
       }
-
       svg.innerHTML = `
         <line x1="${padL}" y1="${padT+h}" x2="${padL+w}" y2="${padT+h}" stroke="#232d45" />
         <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT+h}" stroke="#232d45" />
         <text x="${padL-4}" y="${padT+8}" fill="#94a3b8" font-size="8.5" text-anchor="end">${fmtMoney(maxVal,0)}</text>
         <text x="${padL-4}" y="${padT+h}" fill="#94a3b8" font-size="8.5" text-anchor="end">0</text>
         <text x="${padL}" y="${padT+h+14}" fill="#94a3b8" font-size="9">M0</text>
-        <text x="${padL+w/2}" y="${padT+h+14}" fill="#94a3b8" font-size="9" text-anchor="middle">12个月</text>
-        <text x="${padL+w}" y="${padT+h+14}" fill="#94a3b8" font-size="9" text-anchor="end">24个月</text>
+        <text x="${padL+w/2}" y="${padT+h+14}" fill="#94a3b8" font-size="9" text-anchor="middle">M12</text>
+        <text x="${padL+w}" y="${padT+h+14}" fill="#94a3b8" font-size="9" text-anchor="end">M24</text>
         <polyline fill="none" stroke="#fbbf24" stroke-width="2" points="${saasPts.join(' ')}" />
         <polyline fill="none" stroke="#38bdf8" stroke-width="2" points="${gpuPts.join(' ')}" />
         <polyline fill="none" stroke="#34d399" stroke-width="2.5" points="${locPts.join(' ')}" />
-        <circle cx="${padL+6}" cy="${padT+h+28}" r="4" fill="#fbbf24" /><text x="${padL+14}" y="${padT+h+31}" fill="#94a3b8" font-size="9.5">纯商业SaaS</text>
-        <circle cx="${padL+95}" cy="${padT+h+28}" r="4" fill="#38bdf8" /><text x="${padL+103}" y="${padT+h+31}" fill="#94a3b8" font-size="9.5">纯云GPU租卡</text>
-        <circle cx="${padL+190}" cy="${padT+h+28}" r="4" fill="#34d399" /><text x="${padL+198}" y="${padT+h+31}" fill="#94a3b8" font-size="9.5">黄金分镜头混合方案</text>
+        <circle cx="${padL+6}" cy="${padT+h+28}" r="4" fill="#fbbf24" /><text x="${padL+14}" y="${padT+h+31}" fill="#94a3b8" font-size="9.5">SaaS</text>
+        <circle cx="${padL+75}" cy="${padT+h+28}" r="4" fill="#38bdf8" /><text x="${padL+83}" y="${padT+h+31}" fill="#94a3b8" font-size="9.5">Cloud GPU</text>
+        <circle cx="${padL+165}" cy="${padT+h+28}" r="4" fill="#34d399" /><text x="${padL+173}" y="${padT+h+31}" fill="#94a3b8" font-size="9.5">Hybrid Recipe</text>
       `;
     }
 
     function calculate() {
+      const L = t();
       const humanCostPerVid = Math.max(5, Number(document.getElementById("in-human-cost-per-vid").value) || 80);
       const profitPerOrder = Math.max(1, Number(document.getElementById("in-profit-per-order").value) || 25);
       const videos = Number(document.getElementById("in-videos").value);
@@ -1363,7 +1752,7 @@
       }
       const shotLocalPct = 100 - shotApiPct - shotAvatarPct;
 
-      document.getElementById("val-videos").textContent = videos + " 条";
+      document.getElementById("val-videos").textContent = `${videos} ${L.unitVid}`;
       document.getElementById("val-sec").textContent = secPerVideo + "s";
       document.getElementById("val-retry").textContent = retry.toFixed(1) + "x";
       document.getElementById("val-shot-api").textContent = shotApiPct + "%";
@@ -1376,8 +1765,8 @@
       const addonTotal = finishedMin * getPipelineAddonPerFinishedMin();
       const humanMonthlyTotal = videos * humanCostPerVid;
 
-      document.getElementById("kpi-human-mo").textContent = fmtMoney(humanMonthlyTotal, 0) + "/月";
-      document.getElementById("kpi-human-sub").textContent = `单条外包 ${fmtMoney(humanCostPerVid, 0)} × ${videos}条`;
+      document.getElementById("kpi-human-mo").textContent = fmtMoney(humanMonthlyTotal, 0) + L.perMo;
+      document.getElementById("kpi-human-sub").textContent = `${fmtMoney(humanCostPerVid, 0)} × ${videos}`;
 
       const { model, quant, reqVram, quantSpeedBoost, amortMonths, resalePct, elecRate, clusterMode } = getModelSpec();
       const baseClipSec4090 = res === "720p" ? model.sec_720p : res === "1080p" ? model.sec_1080p : model.sec_4k;
@@ -1393,22 +1782,14 @@
         const dailyHrs = (fleetRes.hours * (shotLocalPct / 100)) / 30;
         const vramBox = document.getElementById("vram-status");
         const slaBox = document.getElementById("sla-status");
-
-        if (fleetRes.oom) {
-          vramBox.className = "alert-box alert-oom";
-          vramBox.innerHTML = `⚠️ <strong>显存溢出 (OOM)：</strong> ${model.name} (${quant.toUpperCase()}) 需 ${reqVram}GB，请开启「Exo 内存池化」或改用 FP8/INT4。`;
-        } else {
-          vramBox.className = "alert-box alert-ok";
-          vramBox.innerHTML = `✅ <strong>多机分工就绪：</strong> ${fleetRes.runnableNodes} 台大显存设备跑主视频，其余设备自动分流生图/TTS/客服，综合算力 <strong>${fleetRes.totalSpeedMult.toFixed(2)}x RTX 4090</strong>。`;
-        }
-
-        if (dailyHrs > maxDailyHrs) {
-          slaBox.className = "alert-box alert-warn";
-          slaBox.innerHTML = `⏱️ <strong>产能预警：</strong> 本地需挂机 <strong>${dailyHrs.toFixed(1)}h/天</strong>（超上限 ${maxDailyHrs}h），建议点击顶部「✨ AI 一键给出最优省钱架构」！`;
-        } else {
-          slaBox.className = "alert-box alert-ok";
-          slaBox.innerHTML = `⚡ <strong>排期轻松：</strong> 配合分镜头配方，本地机器日均仅需跑 <strong>${dailyHrs.toFixed(1)}h/天</strong>。`;
-        }
+        vramBox.className = fleetRes.oom ? "alert-box alert-oom" : "alert-box alert-ok";
+        vramBox.innerHTML = fleetRes.oom
+          ? `⚠️ OOM: ${model.name} (${quant.toUpperCase()}) needs ${reqVram}GB VRAM.`
+          : `✅ VRAM OK: ${fleetRes.runnableNodes}/${fleetRes.totalNodes} nodes active (${fleetRes.totalSpeedMult.toFixed(2)}x RTX 4090).`;
+        slaBox.className = dailyHrs > maxDailyHrs ? "alert-box alert-warn" : "alert-box alert-ok";
+        slaBox.innerHTML = dailyHrs > maxDailyHrs
+          ? `⏱️ SLA Alert: ${dailyHrs.toFixed(1)}h/day > ${maxDailyHrs}h limit.`
+          : `⚡ SLA OK: ${dailyHrs.toFixed(1)}h/day local load.`;
       }
 
       const apiPartCost = (rawSec * (shotApiPct / 100)) * (res === "720p" ? 0.18 : res === "1080p" ? 0.28 : 0.55);
@@ -1419,47 +1800,37 @@
       const recipeCostPerVid = recipeMonthlyTotal / videos;
       const breakevenOrders = (recipeCostPerVid / profitPerOrder).toFixed(1);
 
-      document.getElementById("kpi-hybrid-cost").textContent = fmtMoney(recipeMonthlyTotal, 0) + "/月";
-      document.getElementById("kpi-hybrid-sub").textContent = `${shotLocalPct}%本地 + ${shotAvatarPct}%口播 + ${shotApiPct}%特写API`;
-      document.getElementById("kpi-cost-per-vid").textContent = fmtMoney(recipeCostPerVid, 1) + "/条";
-      document.getElementById("kpi-orders-sub").textContent = `每条仅需带货 ${breakevenOrders} 单即回本`;
+      document.getElementById("kpi-hybrid-cost").textContent = fmtMoney(recipeMonthlyTotal, 0) + L.perMo;
+      document.getElementById("kpi-hybrid-sub").textContent = `${shotLocalPct}% Local + ${shotAvatarPct}% Avatar + ${shotApiPct}% API`;
+      document.getElementById("kpi-cost-per-vid").textContent = fmtMoney(recipeCostPerVid);
+      document.getElementById("kpi-orders-sub").textContent = `${breakevenOrders} ${L.unitOrder}`;
 
       const annualSavingsUsd = Math.max(0, (humanMonthlyTotal - recipeMonthlyTotal) * 12);
-      document.getElementById("verdict-annual-save").textContent = fmtMoney(annualSavingsUsd, 0) + "/年";
-      document.getElementById("verdict-breakeven-orders").textContent = `单条成本从 ${fmtMoney(humanCostPerVid,0)} 降至 ${fmtMoney(recipeCostPerVid,1)}（卖 ${breakevenOrders} 单即回本）`;
-      document.getElementById("verdict-headline").textContent = `💡 最佳落地方案：用「${shotLocalPct}%本地集群 + ${shotAvatarPct}%数字人口播 + ${shotApiPct}%顶级API特写」替代传统实拍`;
-      document.getElementById("verdict-detail").textContent = `既避免了 100% 纯用本地开源模型导致前 3 秒特写穿帮，又比 100% 购买 Kling/Runway 会员每月多省下 ${fmtMoney(Math.max(0, (rawSec*0.28 + addonTotal) - recipeMonthlyTotal), 0)}！本地集群日均仅需挂机 ${(localPartHours/30).toFixed(1)} 小时。`;
+      document.getElementById("verdict-annual-save").textContent = fmtMoney(annualSavingsUsd, 0) + L.perYr;
+      document.getElementById("verdict-breakeven-orders").textContent = `${fmtMoney(humanCostPerVid,0)} → ${fmtMoney(recipeCostPerVid)} (${breakevenOrders} ${L.unitOrder})`;
+      document.getElementById("verdict-headline").textContent = currentLang === "zh"
+        ? `💡 最佳落地方案：用「${shotLocalPct}%本地集群 + ${shotAvatarPct}%数字人口播 + ${shotApiPct}%顶级API特写」替代传统实拍`
+        : `💡 Recommended Stack: ${shotLocalPct}% Local Fleet + ${shotAvatarPct}% Avatar + ${shotApiPct}% Flagship API`;
+      document.getElementById("verdict-detail").textContent = currentLang === "zh"
+        ? `兼顾前 3 秒商业质感与极低边际成本，比 100% 买商业 SaaS 每月再省 ${fmtMoney(Math.max(0, (rawSec*0.28 + addonTotal) - recipeMonthlyTotal), 0)}，本地日均仅需 ${(localPartHours/30).toFixed(1)}h。`
+        : `Protects 3-second hook quality while saving ${fmtMoney(Math.max(0, (rawSec*0.28 + addonTotal) - recipeMonthlyTotal), 0)}${L.perMo} vs. 100% Cloud SaaS. Local load: ${(localPartHours/30).toFixed(1)}h/day.`;
 
       rows.push({
-        name: `🌟 黄金分镜头配方 (${shotLocalPct}%本地+${shotAvatarPct}%口播+${shotApiPct}%特写)`,
-        vramBadge: `前3秒防穿帮 · ${(localPartHours/30).toFixed(1)}h/天`,
-        oom: false,
-        slaOver: (localPartHours / 30) > maxDailyHrs,
-        monthly: recipeMonthlyTotal,
-        perVideo: recipeCostPerVid,
-        ordersNeeded: breakevenOrders,
-        hours: localPartHours,
-        source_url: "https://www.zemith.com/en/learn/kling-pricing",
-        source_name: "Hybrid Recipe",
-        affiliate_url: decorateAffiliateUrl("https://kling.ai/dev/pricing"),
-        type: "hybrid",
-        cta: "导出配方脚本"
+        name: `🌟 Hybrid Recipe (${shotLocalPct}%/${shotAvatarPct}%/${shotApiPct}%)`,
+        vramBadge: `${(localPartHours/30).toFixed(1)}h/day`,
+        oom: false, slaOver: (localPartHours / 30) > maxDailyHrs,
+        monthly: recipeMonthlyTotal, perVideo: recipeCostPerVid, ordersNeeded: breakevenOrders, hours: localPartHours,
+        source_url: "https://www.zemith.com/en/learn/kling-pricing", source_name: "Hybrid Recipe",
+        affiliate_url: decorateAffiliateUrl("https://kling.ai/dev/pricing"), type: "hybrid", cta: L.ctaHybrid
       });
 
       rows.push({
-        name: primaryStats.name,
-        vramBadge: `${primaryStats.vramBadge} · ${(primaryStats.hours/30).toFixed(1)}h/天`,
-        oom: primaryStats.oom,
-        slaOver: (primaryStats.hours / 30) > maxDailyHrs,
-        monthly: primaryStats.monthly + addonTotal,
-        perVideo: (primaryStats.monthly + addonTotal) / videos,
-        ordersNeeded: (((primaryStats.monthly + addonTotal) / videos) / profitPerOrder).toFixed(1),
-        hours: primaryStats.hours,
-        source_url: "https://www.apple.com/mac-studio/",
-        source_name: "Local Fleet",
-        affiliate_url: "https://www.apple.com/mac-studio/",
-        type: "fleet",
-        cta: "查看分工表"
+        name: primaryStats.name, vramBadge: `${primaryStats.vramBadge} · ${(primaryStats.hours/30).toFixed(1)}h/d`,
+        oom: primaryStats.oom, slaOver: (primaryStats.hours / 30) > maxDailyHrs,
+        monthly: primaryStats.monthly + addonTotal, perVideo: (primaryStats.monthly + addonTotal) / videos,
+        ordersNeeded: (((primaryStats.monthly + addonTotal) / videos) / profitPerOrder).toFixed(1), hours: primaryStats.hours,
+        source_url: "https://www.apple.com/mac-studio/", source_name: "Local Fleet",
+        affiliate_url: "https://www.apple.com/mac-studio/", type: "fleet", cta: L.ctaLocal
       });
 
       const selectedCloudIds = currentMode === "quick"
@@ -1472,19 +1843,11 @@
         const totalHours = (num5sClips * clipSec) / 3600;
         const monthly = (totalHours * gpu.hourly_rate) + addonTotal;
         rows.push({
-          name: `${gpu.name} · ${model.name.split(" ")[0]}`,
-          vramBadge: `${gpu.vram_gb}GB 云显存`,
-          oom: isOom,
-          slaOver: false,
-          monthly,
-          perVideo: monthly / videos,
-          ordersNeeded: ((monthly / videos) / profitPerOrder).toFixed(1),
-          hours: totalHours,
-          source_url: gpu.source_url,
-          source_name: gpu.source_name,
-          affiliate_url: decorateAffiliateUrl(gpu.affiliate_url),
-          type: "cloud_gpu",
-          cta: "租用 GPU →"
+          name: `${gpu.name} · ${model.name.split(" ")[0]}`, vramBadge: `${gpu.vram_gb}GB VRAM`,
+          oom: isOom, slaOver: false, monthly, perVideo: monthly / videos,
+          ordersNeeded: ((monthly / videos) / profitPerOrder).toFixed(1), hours: totalHours,
+          source_url: gpu.source_url, source_name: gpu.source_name,
+          affiliate_url: decorateAffiliateUrl(gpu.affiliate_url), type: "cloud_gpu", cta: L.ctaCloud
         });
       });
 
@@ -1496,36 +1859,18 @@
         const rate = res === "720p" ? item.cost_720p : res === "1080p" ? item.cost_1080p : item.cost_4k;
         const monthly = (rawSec * rate) + addonTotal;
         rows.push({
-          name: `100% 纯用 ${item.name}`,
-          vramBadge: "Cloud API · 免排队",
-          oom: false,
-          slaOver: false,
-          monthly,
-          perVideo: monthly / videos,
-          ordersNeeded: ((monthly / videos) / profitPerOrder).toFixed(1),
-          hours: (rawSec / 60) * 0.35,
-          source_url: item.source_url,
-          source_name: item.source_name,
-          affiliate_url: decorateAffiliateUrl(item.affiliate_url),
-          type: item.id.startsWith("heygen") ? "avatar" : "saas",
-          cta: "订阅方案 →"
+          name: `100% ${item.name}`, vramBadge: "Cloud API", oom: false, slaOver: false,
+          monthly, perVideo: monthly / videos, ordersNeeded: ((monthly / videos) / profitPerOrder).toFixed(1),
+          hours: (rawSec / 60) * 0.35, source_url: item.source_url, source_name: item.source_name,
+          affiliate_url: decorateAffiliateUrl(item.affiliate_url), type: item.id.startsWith("heygen") ? "avatar" : "saas", cta: L.ctaSaas
         });
       });
 
       rows.push({
-        name: "👥 传统真人实拍 / 剪辑外包团队",
-        vramBadge: "人工排期慢 · 沟通重",
-        oom: false,
-        slaOver: false,
-        monthly: humanMonthlyTotal,
-        perVideo: humanCostPerVid,
-        ordersNeeded: (humanCostPerVid / profitPerOrder).toFixed(1),
-        hours: videos * 4,
-        source_url: "https://runway.com/pricing",
-        source_name: "传统人工基准",
-        affiliate_url: "https://runway.com/pricing",
-        type: "human",
-        cta: "被 AI 替代"
+        name: L.humanRowName, vramBadge: L.humanBadge, oom: false, slaOver: false,
+        monthly: humanMonthlyTotal, perVideo: humanCostPerVid, ordersNeeded: (humanCostPerVid / profitPerOrder).toFixed(1),
+        hours: videos * 4, source_url: "https://runway.com/pricing", source_name: "Baseline",
+        affiliate_url: "https://runway.com/pricing", type: "human", cta: L.ctaHuman
       });
 
       rows.sort((a, b) => (a.oom === b.oom ? a.monthly - b.monthly : a.oom ? 1 : -1));
@@ -1535,23 +1880,21 @@
       const refCloudGpuRow = rows.find(r => r.type === "cloud_gpu" && !r.oom);
       const refCloudGpuMonthly = refCloudGpuRow ? refCloudGpuRow.monthly : (rawSec * 0.05 + addonTotal);
 
-      if (primaryStats) {
-        const dailyH = localPartHours / 30;
-        document.getElementById("kpi-daily-hrs").textContent = dailyH.toFixed(1) + " h/天";
-        document.getElementById("kpi-render-sub").textContent = `集群算力 ${primaryStats.totalSpeedMult.toFixed(2)}x 4090`;
-        if (primaryStats.newCapex === 0) {
-          document.getElementById("kpi-payback").textContent = "0 个月 (已回本)";
-          document.getElementById("kpi-payback-sub").textContent = `全用现有设备，零新购支出`;
-        } else if (refSaasMonthly > recipeMonthlyTotal) {
-          const payback = primaryStats.netDepreciableCapex / (refSaasMonthly - recipeMonthlyTotal);
-          document.getElementById("kpi-payback").textContent = payback.toFixed(1) + " 个月";
-          document.getElementById("kpi-payback-sub").textContent = `扣${resalePct}%残值净投 ${fmtMoney(primaryStats.netDepreciableCapex,0)}`;
-        }
-        drawTcoChart(refSaasMonthly, refCloudGpuMonthly, primaryStats.netDepreciableCapex, recipeMonthlyTotal - (primaryStats.netDepreciableCapex / amortMonths));
+      const dailyH = localPartHours / 30;
+      document.getElementById("kpi-daily-hrs").textContent = dailyH.toFixed(1) + " h/d";
+      document.getElementById("kpi-render-sub").textContent = `${primaryStats.totalSpeedMult.toFixed(2)}x RTX 4090`;
+      if (primaryStats.newCapex === 0) {
+        document.getElementById("kpi-payback").textContent = `0 ${L.unitMo}`;
+        document.getElementById("kpi-payback-sub").textContent = L.owned;
+      } else if (refSaasMonthly > recipeMonthlyTotal) {
+        const payback = primaryStats.netDepreciableCapex / (refSaasMonthly - recipeMonthlyTotal);
+        document.getElementById("kpi-payback").textContent = `${payback.toFixed(1)} ${L.unitMo}`;
+        document.getElementById("kpi-payback-sub").textContent = `Net ${fmtMoney(primaryStats.netDepreciableCapex,0)}`;
       }
+      drawTcoChart(refSaasMonthly, refCloudGpuMonthly, primaryStats.netDepreciableCapex, recipeMonthlyTotal - (primaryStats.netDepreciableCapex / amortMonths));
 
       const maxCost = Math.max(...rows.slice(0, 8).map(r => r.monthly), 1);
-      document.getElementById("chart-bars").innerHTML = rows.slice(0, 8).map((r, i) => {
+      document.getElementById("chart-bars").innerHTML = rows.slice(0, 8).map(r => {
         const pct = Math.max(4, (r.monthly / maxCost) * 100);
         const color = r.type === "human" ? "var(--rose)" : r.type === "hybrid" ? "var(--green)" : r.type === "fleet" ? "var(--accent)" : "var(--amber)";
         return `
@@ -1562,36 +1905,27 @@
           </div>`;
       }).join("");
 
-      document.getElementById("table-body").innerHTML = rows.map((r, i) => `
+      document.getElementById("table-body").innerHTML = rows.map(r => `
         <tr style="${r.oom ? 'opacity:0.55;' : ''}">
-          <td>
-            ${r.name}
-            ${r.type === 'hybrid' ? '<span class="tag-best">老板首选</span>' : ''}
-            ${r.oom ? '<span class="tag-oom">显存不足 OOM</span>' : ''}
-          </td>
-          <td>${r.vramBadge} ${r.slaOver ? '<span class="tag-oom">超日均时长</span>' : ''}</td>
+          <td>${r.name} ${r.type === 'hybrid' ? `<span class="tag-best">${L.bestTag}</span>` : ''} ${r.oom ? `<span class="tag-oom">${L.oomTag}</span>` : ''}</td>
+          <td>${r.vramBadge} ${r.slaOver ? `<span class="tag-oom">${L.slaOverTag}</span>` : ''}</td>
           <td><strong>${fmtMoney(r.monthly, 0)}</strong></td>
-          <td>${fmtMoney(r.perVideo, 1)} / 条</td>
-          <td><strong>${r.ordersNeeded} 单</strong></td>
-          <td>${r.hours.toFixed(1)}h (${(r.hours/30).toFixed(1)}h/天)</td>
+          <td>${fmtMoney(r.perVideo)}</td>
+          <td><strong>${r.ordersNeeded} ${L.unitOrder}</strong></td>
+          <td>${r.hours.toFixed(1)}h (${(r.hours/30).toFixed(1)}h/d)</td>
           <td><a href="${r.source_url}" target="_blank" rel="noopener">${r.source_name}</a></td>
           <td><a class="cta-btn" href="${r.affiliate_url}" target="_blank" rel="noopener">${r.cta}</a></td>
         </tr>
       `).join("");
 
-      lastReportSummary = `# AI 视频替代实拍与多机算力分工立项书 (v5.0 Generated 2026-11-18)
-- 业务产能目标：每月 ${videos} 条 × ${secPerVideo}s (${res}，抽卡率 ${retry}x)
-- 传统实拍/外包月支出：${fmtMoney(humanMonthlyTotal, 0)}/月 (${fmtMoney(humanCostPerVid, 0)}/条)
-- 黄金分镜头混合方案月支出：${fmtMoney(recipeMonthlyTotal, 0)}/月 (单条成本仅 ${fmtMoney(recipeCostPerVid, 1)}，卖 ${breakevenOrders} 单即回本)
-- 每年净省纯利润：${fmtMoney(annualSavingsUsd, 0)} / 年
+      lastReportSummary = `# AI Video ROI & Multi-Node Architecture Brief (${currentLang.toUpperCase()} / ${currency})
+- Monthly Target: ${videos} videos × ${secPerVideo}s (${res}, ${retry}x retries)
+- Traditional Agency Cost: ${fmtMoney(humanMonthlyTotal, 0)}${L.perMo}
+- Hybrid Recipe (${shotLocalPct}% Local / ${shotAvatarPct}% Avatar / ${shotApiPct}% API): ${fmtMoney(recipeMonthlyTotal, 0)}${L.perMo} (${fmtMoney(recipeCostPerVid)}/vid)
+- Annual Net Savings: ${fmtMoney(annualSavingsUsd, 0)}${L.perYr}
 
-## 一、单条视频「防穿帮分镜头配方」(${shotLocalPct} / ${shotAvatarPct} / ${shotApiPct} 法则)
-1. 黄金前 3 秒 / 强物理光影特写 (${shotApiPct}%)：调用 Kling 4.0 Pro / Veo 3.0 API，确保第一眼完播率与真实物理质感。
-2. 人物口播 / 产品卖点背书 (${shotAvatarPct}%)：调用 HeyGen / 本地数字人对口型，零废片稳定输出。
-3. 常规 B-Roll / 场景铺垫镜头 (${shotLocalPct}%)：全部交由本地多机集群 24h 零边际成本挂机生成。
-
-## 二、当前视频自动拆镜派单表
-${lastDispatchedQueue.map(s => `- ${s.id} → ${s.node} | 成本 ${fmtMoney(s.costUsd, 2)} | ${s.prompt}`).join("\n")}`;
+## Dispatched Shots
+${lastDispatchedQueue.map(s => `- ${s.id} → ${s.node} | ${fmtMoney(s.costUsd)} | ${s.prompt}`).join("\n")}`;
     }
 
     function autoOptimizeStack() {
@@ -1604,6 +1938,7 @@ ${lastDispatchedQueue.map(s => `- ${s.id} → ${s.node} | 成本 ${fmtMoney(s.co
 
     function shareConfigUrl() {
       const params = new URLSearchParams({
+        lang: currentLang,
         m: currentMode,
         v: document.getElementById("in-videos").value,
         s: document.getElementById("in-sec").value,
@@ -1613,38 +1948,41 @@ ${lastDispatchedQueue.map(s => `- ${s.id} → ${s.node} | 成本 ${fmtMoney(s.co
       });
       const url = window.location.origin + window.location.pathname + "?" + params.toString();
       navigator.clipboard.writeText(url);
-      alert("专属测算配置链接已复制到剪贴板！\n\n" + url);
+      alert(t().copyDone + "\n\n" + url);
     }
 
     function openReportModal() {
-      document.getElementById("modal-title").textContent = "📋 专属商业立项书 & 多机精准分工部署方案";
+      document.getElementById("modal-title").textContent = t().m2Btn;
       document.getElementById("modal-content").textContent = lastReportSummary;
       document.getElementById("report-modal").classList.remove("hidden");
     }
 
     function openGeoModal() {
-      document.getElementById("modal-title").textContent = "🤖 GEO 自动化高转化长尾落地页矩阵";
-      document.getElementById("modal-content").textContent = `# 已内置 build_geo_matrix.py 长尾流量裂变器
-在终端运行 python3 build_geo_matrix.py 即可在 ./compare/ 目录自动生成以下高转化对比页：
-1. compare/kling-ai-vs-runway-gen45-cost.html
-2. compare/mac-studio-m4-max-vs-rtx-4090-comfyui.html
-3. compare/wan-14b-local-vs-runpod-cloud-gpu.html
-4. compare/veo-3-api-vs-kling-pro-pricing.html`;
+      document.getElementById("modal-title").textContent = t().m3T;
+      document.getElementById("modal-content").textContent = `Active GEO Landing Pages (./compare/):\n1. compare/kling-ai-vs-runway-gen45-cost.html\n2. compare/mac-studio-m4-max-vs-rtx-4090-comfyui.html\n3. compare/wan-14b-local-vs-runpod-cloud-gpu.html\n4. compare/veo-3-api-vs-kling-pro-pricing.html\n\nLocalized Direct Links:\n- English: ?lang=en\n- 中文: ?lang=zh\n- 日本語: ?lang=ja\n- 한국어: ?lang=ko\n- Español: ?lang=es`;
       document.getElementById("report-modal").classList.remove("hidden");
     }
 
     function copyModalText() {
       navigator.clipboard.writeText(document.getElementById("modal-content").textContent);
-      alert("已复制到剪贴板！");
+      alert(t().copyDone);
     }
 
-    // Load saved affiliate IDs if present
+    // Initialize: detect URL ?lang= -> saved -> browser language
     try {
       const savedAff = localStorage.getItem("geo_aff_config");
       if (savedAff) affConfig = JSON.parse(savedAff);
     } catch (_) {}
 
-    renderFleet();
+    const urlParams = new URLSearchParams(window.location.search);
+    const navLang = (navigator.language || "en").slice(0, 2).toLowerCase();
+    const initLang = urlParams.get("lang") || localStorage.getItem("geo_lang") || (I18N[navLang] ? navLang : "en");
+    if (urlParams.get("v")) document.getElementById("in-videos").value = urlParams.get("v");
+    if (urlParams.get("s")) document.getElementById("in-sec").value = urlParams.get("s");
+    if (urlParams.get("r")) document.getElementById("in-retry").value = urlParams.get("r");
+    if (urlParams.get("res")) document.getElementById("in-res").value = urlParams.get("res");
+    if (urlParams.get("m") === "custom") currentMode = "custom";
+
     renderCheckboxes();
     ["in-human-cost-per-vid", "in-profit-per-order", "in-videos", "in-sec", "in-retry", "in-res", "in-max-daily-hrs", "in-shot-api", "in-shot-avatar", "in-hw-quick", "in-local-model", "in-quant", "in-cluster-mode", "in-amort-months", "in-resale-pct", "in-elec-custom"].forEach(id => {
       const el = document.getElementById(id);
@@ -1653,7 +1991,14 @@ ${lastDispatchedQueue.map(s => `- ${s.id} → ${s.node} | 成本 ${fmtMoney(s.co
         el.addEventListener("change", calculate);
       }
     });
-    calculate();
+
+    setLanguage(initLang, Boolean(urlParams.get("c")));
+    if (urlParams.get("c") && FX[urlParams.get("c")]) {
+      currency = urlParams.get("c");
+      applyStaticTranslations();
+      calculate();
+    }
+    if (currentMode === "custom") switchMode("custom");
   </script>
 </body>
 </html>
