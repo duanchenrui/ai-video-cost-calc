@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-17",
+  "last_updated": "2026-11-19",
   "currency": "USD",
   "video_saas": [
     {
@@ -39,9 +39,9 @@
       "id": "veo3_api",
       "name": "Google Veo 3.0 / 3.1 (Vertex AI API)",
       "tier": "Pay-as-you-go ($0.40/s)",
-      "cost_per_raw_sec_720p": 0.40,
-      "cost_per_raw_sec_1080p": 0.40,
-      "cost_per_raw_sec_4k": 0.60,
+      "cost_per_raw_sec_720p": 0.4,
+      "cost_per_raw_sec_1080p": 0.4,
+      "cost_per_raw_sec_4k": 0.6,
       "affiliate_url": "https://aistudio.google.com/docs/veo",
       "source_url": "https://models.litellm.ai/models/veo-3.0-generate-001",
       "source_name": "LiteLLM 2026"
