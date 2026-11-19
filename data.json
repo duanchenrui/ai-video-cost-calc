@@ -1,0 +1,295 @@
+{
+  "last_updated": "2026-11-17",
+  "currency": "USD",
+  "video_saas": [
+    {
+      "id": "kling_std",
+      "name": "Kling AI 3.0/4.0 (Standard 720p/1080p)",
+      "tier": "Standard ($10/mo, 660 cr)",
+      "cost_per_raw_sec_720p": 0.11,
+      "cost_per_raw_sec_1080p": 0.21,
+      "cost_per_raw_sec_4k": 0.42,
+      "affiliate_url": "https://kling.ai/dev/pricing",
+      "source_url": "https://www.zemith.com/en/learn/kling-pricing",
+      "source_name": "Zemith 2026"
+    },
+    {
+      "id": "kling_pro",
+      "name": "Kling AI 4.0 (Pro High-Motion)",
+      "tier": "Pro ($37/mo, 3,000 cr)",
+      "cost_per_raw_sec_720p": 0.18,
+      "cost_per_raw_sec_1080p": 0.28,
+      "cost_per_raw_sec_4k": 0.55,
+      "affiliate_url": "https://kling.ai/dev/pricing",
+      "source_url": "https://www.zemith.com/en/learn/kling-pricing",
+      "source_name": "Zemith 2026"
+    },
+    {
+      "id": "runway_gen45",
+      "name": "Runway Gen-4.5 (Flagship Director)",
+      "tier": "Standard $15 / Pro $35 / Max $95",
+      "cost_per_raw_sec_720p": 0.24,
+      "cost_per_raw_sec_1080p": 0.29,
+      "cost_per_raw_sec_4k": 0.45,
+      "affiliate_url": "https://runway.com/pricing",
+      "source_url": "https://academy.techpresso.co/reviews/is-runway-worth-it",
+      "source_name": "Techpresso 2026"
+    },
+    {
+      "id": "veo3_api",
+      "name": "Google Veo 3.0 / 3.1 (Vertex AI API)",
+      "tier": "Pay-as-you-go ($0.40/s)",
+      "cost_per_raw_sec_720p": 0.40,
+      "cost_per_raw_sec_1080p": 0.40,
+      "cost_per_raw_sec_4k": 0.60,
+      "affiliate_url": "https://aistudio.google.com/docs/veo",
+      "source_url": "https://models.litellm.ai/models/veo-3.0-generate-001",
+      "source_name": "LiteLLM 2026"
+    },
+    {
+      "id": "heygen_avatar_v",
+      "name": "HeyGen Avatar IV/V (Premium Lip-Sync)",
+      "tier": "Creator $29/mo (600 cr)",
+      "cost_per_raw_sec_720p": 0.016,
+      "cost_per_raw_sec_1080p": 0.016,
+      "cost_per_raw_sec_4k": 0.032,
+      "affiliate_url": "https://www.heygen.com/pricing",
+      "source_url": "https://usevelo.ai/blog/heygen-pricing/",
+      "source_name": "Velo 2026"
+    },
+    {
+      "id": "heygen_avatar_iii",
+      "name": "HeyGen Avatar III (Fast Talking Head)",
+      "tier": "Creator $29/mo (~200 mins)",
+      "cost_per_raw_sec_720p": 0.0025,
+      "cost_per_raw_sec_1080p": 0.0025,
+      "cost_per_raw_sec_4k": 0.005,
+      "affiliate_url": "https://www.heygen.com/pricing",
+      "source_url": "https://usevelo.ai/blog/heygen-pricing/",
+      "source_name": "Velo 2026"
+    }
+  ],
+  "local_models": [
+    {
+      "id": "wan_14b",
+      "name": "Wan 2.1 / 3.0 (14B ComfyUI Video)",
+      "task": "video",
+      "vram_fp16_gb": 28,
+      "vram_fp8_gb": 15,
+      "vram_int4_gb": 10,
+      "base_sec_per_5s_4090_720p": 160,
+      "base_sec_per_5s_4090_1080p": 340,
+      "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+      "source_name": "Wan3 Benchmark"
+    },
+    {
+      "id": "hunyuan_video",
+      "name": "HunyuanVideo 13B (ComfyUI)",
+      "task": "video",
+      "vram_fp16_gb": 26,
+      "vram_fp8_gb": 14,
+      "vram_int4_gb": 9.5,
+      "base_sec_per_5s_4090_720p": 180,
+      "base_sec_per_5s_4090_1080p": 360,
+      "source_url": "https://www.layer3labs.io/guides/is-runpod-worth-it",
+      "source_name": "Layer3Labs 2026"
+    },
+    {
+      "id": "flux_dev_video_pipe",
+      "name": "Flux.1 Dev + SVD / I2V Storyboard Pipe",
+      "task": "video",
+      "vram_fp16_gb": 24,
+      "vram_fp8_gb": 12,
+      "vram_int4_gb": 8,
+      "base_sec_per_5s_4090_720p": 95,
+      "base_sec_per_5s_4090_1080p": 190,
+      "source_url": "https://www.layer3labs.io/guides/is-runpod-worth-it",
+      "source_name": "Layer3Labs 2026"
+    },
+    {
+      "id": "qwen_72b_llm",
+      "name": "Qwen 2.5 / 3 (72B Local Agent / Script LLM)",
+      "task": "llm",
+      "vram_fp16_gb": 144,
+      "vram_fp8_gb": 76,
+      "vram_int4_gb": 42,
+      "base_sec_per_5s_4090_720p": 45,
+      "base_sec_per_5s_4090_1080p": 60,
+      "source_url": "https://support.apple.com/en-us/122211",
+      "source_name": "Unified Memory Ref"
+    }
+  ],
+  "cloud_gpu": [
+    {
+      "id": "runpod_4090_comm",
+      "name": "RunPod RTX 4090 (24GB Community)",
+      "vram_gb": 24,
+      "speed_mult_vs_4090": 1.0,
+      "hourly_rate": 0.34,
+      "affiliate_url": "https://www.runpod.io/gpu-models/rtx-4090",
+      "source_url": "https://www.layer3labs.io/guides/is-runpod-worth-it",
+      "source_name": "Layer3Labs 2026"
+    },
+    {
+      "id": "vast_4090",
+      "name": "Vast.ai RTX 4090 (24GB Spot/Median)",
+      "vram_gb": 24,
+      "speed_mult_vs_4090": 1.0,
+      "hourly_rate": 0.36,
+      "affiliate_url": "https://vast.ai/pricing/gpu/RTX-4090",
+      "source_url": "https://www.activepieces.com/blog/vast-ai-gpu-pricing-per-hour-in-2026-and-extra-fees",
+      "source_name": "Activepieces 2026"
+    },
+    {
+      "id": "vast_5090",
+      "name": "Vast.ai RTX 5090 (32GB Blackwell)",
+      "vram_gb": 32,
+      "speed_mult_vs_4090": 1.45,
+      "hourly_rate": 0.55,
+      "affiliate_url": "https://vast.ai/pricing/gpu/RTX-5090",
+      "source_url": "https://vast.ai/pricing",
+      "source_name": "Vast.ai Live 2026"
+    },
+    {
+      "id": "runpod_a6000",
+      "name": "RunPod RTX A6000 (48GB VRAM)",
+      "vram_gb": 48,
+      "speed_mult_vs_4090": 0.78,
+      "hourly_rate": 0.59,
+      "affiliate_url": "https://www.runpod.io/pricing",
+      "source_url": "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute",
+      "source_name": "ThunderCompute 2026"
+    },
+    {
+      "id": "runpod_l40s",
+      "name": "RunPod L40S (48GB Ada Enterprise)",
+      "vram_gb": 48,
+      "speed_mult_vs_4090": 1.15,
+      "hourly_rate": 1.09,
+      "affiliate_url": "https://www.runpod.io/pricing",
+      "source_url": "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute",
+      "source_name": "ThunderCompute 2026"
+    },
+    {
+      "id": "runpod_a100_80",
+      "name": "RunPod A100 PCIe/SXM (80GB)",
+      "vram_gb": 80,
+      "speed_mult_vs_4090": 1.35,
+      "hourly_rate": 1.79,
+      "affiliate_url": "https://www.runpod.io/gpu-models/a100-pcie",
+      "source_url": "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute",
+      "source_name": "ThunderCompute 2026"
+    },
+    {
+      "id": "runpod_h100_80",
+      "name": "RunPod H100 SXM (80GB Flagship)",
+      "vram_gb": 80,
+      "speed_mult_vs_4090": 2.6,
+      "hourly_rate": 3.99,
+      "affiliate_url": "https://www.runpod.io/gpu-models/h100-sxm",
+      "source_url": "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute",
+      "source_name": "ThunderCompute 2026"
+    }
+  ],
+  "local_hardware": [
+    {
+      "id": "mac_mini_m4_24",
+      "name": "Mac mini M4 Pro (24GB Unified)",
+      "vram_gb": 18,
+      "speed_mult_vs_4090": 0.18,
+      "capex_usd": 1399,
+      "watts_load": 65,
+      "affiliate_url": "https://www.apple.com/mac-studio/",
+      "source_url": "https://www.apple.com/mac-studio/",
+      "source_name": "Apple Silicon Ref"
+    },
+    {
+      "id": "mac_m2_max_64",
+      "name": "Mac Studio M2 Max (64GB Unified)",
+      "vram_gb": 48,
+      "speed_mult_vs_4090": 0.36,
+      "capex_usd": 1799,
+      "watts_load": 115,
+      "affiliate_url": "https://www.apple.com/mac-studio/",
+      "source_url": "https://www.apple.com/mac-studio/",
+      "source_name": "Apple Mac Studio"
+    },
+    {
+      "id": "mac_m4_max_64",
+      "name": "Mac Studio M4 Max (64GB Unified)",
+      "vram_gb": 50,
+      "speed_mult_vs_4090": 0.45,
+      "capex_usd": 2399,
+      "watts_load": 140,
+      "affiliate_url": "https://www.apple.com/mac-studio/",
+      "source_url": "https://www.techrepublic.com/article/news-apple-mac-studio-cheat-sheet/",
+      "source_name": "TechRepublic 2026"
+    },
+    {
+      "id": "mac_m4_max_128",
+      "name": "Mac Studio M4 Max (128GB Unified)",
+      "vram_gb": 104,
+      "speed_mult_vs_4090": 0.48,
+      "capex_usd": 3199,
+      "watts_load": 145,
+      "affiliate_url": "https://www.apple.com/mac-studio/",
+      "source_url": "https://support.apple.com/en-us/122211",
+      "source_name": "Apple Specs 2025/2026"
+    },
+    {
+      "id": "mac_m3_ultra_96",
+      "name": "Mac Studio M3 Ultra (96GB Unified)",
+      "vram_gb": 76,
+      "speed_mult_vs_4090": 0.72,
+      "capex_usd": 3999,
+      "watts_load": 210,
+      "affiliate_url": "https://www.apple.com/mac-studio/",
+      "source_url": "https://www.techrepublic.com/article/news-apple-mac-studio-cheat-sheet/",
+      "source_name": "TechRepublic 2026"
+    },
+    {
+      "id": "mac_m3_ultra_256",
+      "name": "Mac Studio M3 Ultra (256GB Unified)",
+      "vram_gb": 210,
+      "speed_mult_vs_4090": 0.75,
+      "capex_usd": 5599,
+      "watts_load": 230,
+      "affiliate_url": "https://www.apple.com/mac-studio/",
+      "source_url": "https://support.apple.com/en-us/122211",
+      "source_name": "Apple Specs 2025/2026"
+    },
+    {
+      "id": "pc_rtx_3060_12",
+      "name": "Desktop PC RTX 3060 (12GB Entry)",
+      "vram_gb": 12,
+      "speed_mult_vs_4090": 0.25,
+      "capex_usd": 850,
+      "watts_load": 260,
+      "affiliate_url": "https://vast.ai/pricing/gpu/RTX-3090",
+      "source_url": "https://vast.ai/pricing",
+      "source_name": "GPU Spec Ref"
+    },
+    {
+      "id": "pc_rtx_4090_24",
+      "name": "Workstation RTX 4090 (24GB VRAM)",
+      "vram_gb": 24,
+      "speed_mult_vs_4090": 1.0,
+      "capex_usd": 2600,
+      "watts_load": 500,
+      "affiliate_url": "https://www.runpod.io/gpu-models/rtx-4090",
+      "source_url": "https://www.layer3labs.io/guides/is-runpod-worth-it",
+      "source_name": "Layer3Labs 2026"
+    },
+    {
+      "id": "pc_rtx_5090_32",
+      "name": "Workstation RTX 5090 (32GB GDDR7)",
+      "vram_gb": 32,
+      "speed_mult_vs_4090": 1.45,
+      "capex_usd": 3600,
+      "watts_load": 600,
+      "affiliate_url": "https://vast.ai/pricing/gpu/RTX-5090",
+      "source_url": "https://vast.ai/pricing/gpu/RTX-5090",
+      "source_name": "Vast.ai RTX 5090"
+    }
+  ]
+}
