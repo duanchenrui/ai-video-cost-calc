@@ -828,7 +828,7 @@
               <h4 id="m1-t"></h4>
               <p id="m1-d"></p>
             </div>
-            <a class="pro-btn secondary" id="banner-runpod-link" href="https://www.runpod.io/gpu-models/rtx-4090" target="_blank" rel="noopener" style="text-align:center;text-decoration:none;">RunPod RTX 4090 ($0.34/h) →</a>
+            <a class="pro-btn secondary" id="banner-runpod-link" href="https://runpod.io?ref=ih9t6o9r" target="_blank" rel="noopener" style="text-align:center;text-decoration:none;">RunPod RTX 4090 ($0.34/h) →</a>
           </div>
           <div class="m-card highlight">
             <div>
@@ -1294,7 +1294,7 @@
     let currency = "CNY";
     let lastReportSummary = "";
     let lastDispatchedQueue = [];
-    let affConfig = { runpod: "", vast: "", kling: "", heygen: "" };
+    let affConfig = { runpod: "ih9t6o9r", vast: "869392", kling: "", heygen: "" };
     let userFleet = [
       { hwId: "mac_m2_max_64", qty: 1, owned: "owned" },
       { hwId: "mac_mini_m4_24", qty: 1, owned: "owned" },
@@ -1373,8 +1373,8 @@
     }
 
     function decorateAffiliateUrl(baseUrl) {
-      if (baseUrl.includes("runpod.io") && affConfig.runpod) return baseUrl + "?ref=" + encodeURIComponent(affConfig.runpod);
-      if (baseUrl.includes("vast.ai") && affConfig.vast) return baseUrl + "?ref_id=" + encodeURIComponent(affConfig.vast);
+      if (baseUrl.includes("runpod.io") && affConfig.runpod) return "https://runpod.io?ref=" + encodeURIComponent(affConfig.runpod);
+      if (baseUrl.includes("vast.ai") && affConfig.vast) return "https://cloud.vast.ai/?ref_id=" + encodeURIComponent(affConfig.vast);
       if (baseUrl.includes("kling.ai") && affConfig.kling) return baseUrl + "?ref=" + encodeURIComponent(affConfig.kling);
       if (baseUrl.includes("heygen.com") && affConfig.heygen) return baseUrl + "?sid=" + encodeURIComponent(affConfig.heygen);
       return baseUrl;
@@ -1971,7 +1971,10 @@ ${lastDispatchedQueue.map(s => `- ${s.id} → ${s.node} | ${fmtMoney(s.costUsd)}
     // Initialize: detect URL ?lang= -> saved -> browser language
     try {
       const savedAff = localStorage.getItem("geo_aff_config");
-      if (savedAff) affConfig = JSON.parse(savedAff);
+      if (savedAff) {
+        const parsed = JSON.parse(savedAff);
+        Object.keys(parsed).forEach(k => { if (parsed[k]) affConfig[k] = parsed[k]; });
+      }
     } catch (_) {}
 
     const urlParams = new URLSearchParams(window.location.search);

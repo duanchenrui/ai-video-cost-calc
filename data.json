@@ -126,7 +126,7 @@
       "vram_gb": 24,
       "speed_mult_vs_4090": 1.0,
       "hourly_rate": 0.34,
-      "affiliate_url": "https://www.runpod.io/gpu-models/rtx-4090",
+      "affiliate_url": "https://runpod.io?ref=ih9t6o9r",
       "source_url": "https://www.layer3labs.io/guides/is-runpod-worth-it",
       "source_name": "Layer3Labs 2026"
     },
@@ -136,7 +136,7 @@
       "vram_gb": 24,
       "speed_mult_vs_4090": 1.0,
       "hourly_rate": 0.36,
-      "affiliate_url": "https://vast.ai/pricing/gpu/RTX-4090",
+      "affiliate_url": "https://cloud.vast.ai/?ref_id=869392",
       "source_url": "https://www.activepieces.com/blog/vast-ai-gpu-pricing-per-hour-in-2026-and-extra-fees",
       "source_name": "Activepieces 2026"
     },
@@ -146,7 +146,7 @@
       "vram_gb": 32,
       "speed_mult_vs_4090": 1.45,
       "hourly_rate": 0.55,
-      "affiliate_url": "https://vast.ai/pricing/gpu/RTX-5090",
+      "affiliate_url": "https://cloud.vast.ai/?ref_id=869392",
       "source_url": "https://vast.ai/pricing",
       "source_name": "Vast.ai Live 2026"
     },
@@ -156,7 +156,7 @@
       "vram_gb": 48,
       "speed_mult_vs_4090": 0.78,
       "hourly_rate": 0.59,
-      "affiliate_url": "https://www.runpod.io/pricing",
+      "affiliate_url": "https://runpod.io?ref=ih9t6o9r",
       "source_url": "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute",
       "source_name": "ThunderCompute 2026"
     },
@@ -166,7 +166,7 @@
       "vram_gb": 48,
       "speed_mult_vs_4090": 1.15,
       "hourly_rate": 1.09,
-      "affiliate_url": "https://www.runpod.io/pricing",
+      "affiliate_url": "https://runpod.io?ref=ih9t6o9r",
       "source_url": "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute",
       "source_name": "ThunderCompute 2026"
     },
@@ -176,7 +176,7 @@
       "vram_gb": 80,
       "speed_mult_vs_4090": 1.35,
       "hourly_rate": 1.79,
-      "affiliate_url": "https://www.runpod.io/gpu-models/a100-pcie",
+      "affiliate_url": "https://runpod.io?ref=ih9t6o9r",
       "source_url": "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute",
       "source_name": "ThunderCompute 2026"
     },
@@ -186,7 +186,7 @@
       "vram_gb": 80,
       "speed_mult_vs_4090": 2.6,
       "hourly_rate": 3.99,
-      "affiliate_url": "https://www.runpod.io/gpu-models/h100-sxm",
+      "affiliate_url": "https://runpod.io?ref=ih9t6o9r",
       "source_url": "https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute",
       "source_name": "ThunderCompute 2026"
     }
@@ -265,7 +265,7 @@
       "speed_mult_vs_4090": 0.25,
       "capex_usd": 850,
       "watts_load": 260,
-      "affiliate_url": "https://vast.ai/pricing/gpu/RTX-3090",
+      "affiliate_url": "https://cloud.vast.ai/?ref_id=869392",
       "source_url": "https://vast.ai/pricing",
       "source_name": "GPU Spec Ref"
     },
@@ -276,7 +276,7 @@
       "speed_mult_vs_4090": 1.0,
       "capex_usd": 2600,
       "watts_load": 500,
-      "affiliate_url": "https://www.runpod.io/gpu-models/rtx-4090",
+      "affiliate_url": "https://runpod.io?ref=ih9t6o9r",
       "source_url": "https://www.layer3labs.io/guides/is-runpod-worth-it",
       "source_name": "Layer3Labs 2026"
     },
@@ -287,7 +287,7 @@
       "speed_mult_vs_4090": 1.45,
       "capex_usd": 3600,
       "watts_load": 600,
-      "affiliate_url": "https://vast.ai/pricing/gpu/RTX-5090",
+      "affiliate_url": "https://cloud.vast.ai/?ref_id=869392",
       "source_url": "https://vast.ai/pricing/gpu/RTX-5090",
       "source_name": "Vast.ai RTX 5090"
     }
