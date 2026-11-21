@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-20",
+  "last_updated": "2026-11-21",
   "currency": "USD",
   "video_saas": [
     {
@@ -291,5 +291,6 @@
       "source_url": "https://vast.ai/pricing/gpu/RTX-5090",
       "source_name": "Vast.ai RTX 5090"
     }
-  ]
+  ],
+  "vast_4090_trend_30d_pct": 0.0
 }
