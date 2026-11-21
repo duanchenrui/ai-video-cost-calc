@@ -6,6 +6,7 @@
   <title>AI Video ROI &amp; Multi-Node Compute TCO Engine (2026)</title>
   <meta name="description" content="Global multilingual AI Video &amp; Local Compute ROI Calculator (EN/ZH/JA/KO/ES): compare Kling 4.0, Runway Gen-4.5, Veo 3.0, HeyGen, RunPod RTX 4090/H100, Vast.ai, and multi-device Apple Mac Studio + RTX clusters." />
   <link rel="alternate" type="text/plain" title="LLM Structured Data" href="./llms.txt" />
+  <script src="./finops_engine.js"></script>
   <style>
     :root {
       --bg: #070b12;
@@ -723,6 +724,25 @@
             <div class="vs-label" id="vs-label"></div>
             <div class="vs-val" id="verdict-annual-save">--</div>
             <div class="vs-sub" id="verdict-breakeven-orders"></div>
+          </div>
+        </div>
+
+        <!-- v6.0 FinOps P50/P90 风险带与双盈亏平衡拐点 -->
+        <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px;">
+          <div class="kpi" style="border-color:rgba(56,189,248,0.35);">
+            <div class="k-label">🎲 Monte Carlo P50 / P90 风险预算带 (N=1,000)</div>
+            <div class="k-val" id="kpi-mc-band" style="color:var(--accent);font-size:1.05rem;">-- ~ --</div>
+            <div class="k-sub" id="kpi-mc-sub">常态 P50 vs 爆卡最坏 P90 月预算</div>
+          </div>
+          <div class="kpi" style="border-color:rgba(251,191,36,0.35);">
+            <div class="k-label">⚖️ 拐点 1：云 GPU 反超商业 SaaS</div>
+            <div class="k-val" id="kpi-inf-cloud" style="color:var(--amber);font-size:1.05rem;">--</div>
+            <div class="k-sub">含冷启动/120G存储/15%空转税与SaaS阶梯浪费</div>
+          </div>
+          <div class="kpi" style="border-color:rgba(52,211,153,0.35);">
+            <div class="k-label">⚖️ 拐点 2：买本地卡反超云 GPU</div>
+            <div class="k-val" id="kpi-inf-local" style="color:var(--green);font-size:1.05rem;">--</div>
+            <div class="k-sub">月成片超过此拐点，买本地硬件净折旧更省</div>
           </div>
         </div>
 
@@ -1833,21 +1853,25 @@
         affiliate_url: "https://www.apple.com/mac-studio/", type: "fleet", cta: L.ctaLocal
       });
 
+      const FE = window.FinOpsEngine;
       const selectedCloudIds = currentMode === "quick"
         ? DATA.cloud_gpu.filter(g => g.default_quick).map(g => g.id)
         : Array.from(document.querySelectorAll(".chk-cloud-item:checked")).map(el => el.value);
 
       DATA.cloud_gpu.filter(g => selectedCloudIds.includes(g.id)).forEach(gpu => {
-        const isOom = gpu.vram_gb < reqVram;
-        const clipSec = baseClipSec4090 / (gpu.speed_mult * quantSpeedBoost);
-        const totalHours = (num5sClips * clipSec) / 3600;
-        const monthly = (totalHours * gpu.hourly_rate) + addonTotal;
+        const gpuSpec = Object.assign({ isSpot: gpu.id.includes("comm") || gpu.id.includes("vast") }, gpu);
+        const tco = FE ? FE.calcCloudGpuTco(gpuSpec, reqVram, model.sec_720p, num5sClips, res, quantSpeedBoost) : null;
+        const isOom = tco ? tco.isOom : (gpu.vram_gb < reqVram);
+        const totalHours = tco ? tco.billableHours : ((num5sClips * (baseClipSec4090 / (gpu.speed_mult * quantSpeedBoost))) / 3600);
+        const monthly = (tco ? tco.totalMonthly : totalHours * gpu.hourly_rate) + addonTotal;
+        const badge = tco ? `${gpu.vram_gb}G · 隐性税 ${tco.hiddenTaxPct.toFixed(0)}% (${tco.vramStatus})` : `${gpu.vram_gb}GB VRAM`;
         rows.push({
-          name: `${gpu.name} · ${model.name.split(" ")[0]}`, vramBadge: `${gpu.vram_gb}GB VRAM`,
+          name: `${gpu.name} · ${model.name.split(" ")[0]}`, vramBadge: badge,
           oom: isOom, slaOver: false, monthly, perVideo: monthly / videos,
           ordersNeeded: ((monthly / videos) / profitPerOrder).toFixed(1), hours: totalHours,
           source_url: gpu.source_url, source_name: gpu.source_name,
-          affiliate_url: decorateAffiliateUrl(gpu.affiliate_url), type: "cloud_gpu", cta: L.ctaCloud
+          affiliate_url: decorateAffiliateUrl(gpu.affiliate_url), type: "cloud_gpu", cta: L.ctaCloud,
+          audit: tco ? tco.audit : []
         });
       });
 
@@ -1856,15 +1880,40 @@
         : Array.from(document.querySelectorAll(".chk-saas-item:checked")).map(el => el.value);
 
       DATA.video_saas.filter(s => selectedSaasIds.includes(s.id)).forEach(item => {
+        const stepPlan = (FE && FE.SAAS_TIERS[item.id]) ? FE.optimizeSaasPlan(item.id, rawSec, res) : null;
         const rate = res === "720p" ? item.cost_720p : res === "1080p" ? item.cost_1080p : item.cost_4k;
-        const monthly = (rawSec * rate) + addonTotal;
+        const monthly = (stepPlan ? stepPlan.monthlyCost : (rawSec * rate)) + addonTotal;
+        const badge = stepPlan ? (stepPlan.wastePct > 0 ? `${stepPlan.recommendedBundle} · 浪费${stepPlan.wastePct.toFixed(0)}%` : stepPlan.recommendedBundle) : "Cloud API";
         rows.push({
-          name: `100% ${item.name}`, vramBadge: "Cloud API", oom: false, slaOver: false,
+          name: `100% ${item.name}`, vramBadge: badge, oom: false, slaOver: false,
           monthly, perVideo: monthly / videos, ordersNeeded: ((monthly / videos) / profitPerOrder).toFixed(1),
           hours: (rawSec / 60) * 0.35, source_url: item.source_url, source_name: item.source_name,
-          affiliate_url: decorateAffiliateUrl(item.affiliate_url), type: item.id.startsWith("heygen") ? "avatar" : "saas", cta: L.ctaSaas
+          affiliate_url: decorateAffiliateUrl(item.affiliate_url), type: item.id.startsWith("heygen") ? "avatar" : "saas", cta: L.ctaSaas,
+          audit: stepPlan ? stepPlan.audit : [`Linear fallback: ${rawSec.toFixed(0)}s × $${rate}/s + addons`]
         });
       });
+
+      if (FE) {
+        const mc = FE.runMonteCarlo((rSample, jitter) => {
+          const rSec = videos * secPerVideo * rSample;
+          const apiC = (rSec * (shotApiPct / 100)) * (res === "720p" ? 0.18 : res === "1080p" ? 0.28 : 0.55) * jitter;
+          const avC = (videos * secPerVideo * 1.2 * (shotAvatarPct / 100)) * 0.016;
+          const locC = (primaryStats.netDepreciableCapex / amortMonths) + (primaryStats.elecCost * (rSample / retry) * (shotLocalPct / 100));
+          return apiC + avC + locC + addonTotal;
+        }, retry, 1000);
+        document.getElementById("kpi-mc-band").textContent = `${fmtMoney(mc.p50, 0)} ~ ${fmtMoney(mc.p90, 0)}${L.perMo}`;
+
+        const refGpu = DATA.cloud_gpu[0];
+        const inf = FE.findBreakEvenInflections(m => {
+          const rS = m * 60 * retry;
+          const kPlan = FE.optimizeSaasPlan("kling_pro", rS, res);
+          const gTco = FE.calcCloudGpuTco(Object.assign({ isSpot: true }, refGpu), reqVram, model.sec_720p, rS / 5, res, quantSpeedBoost);
+          const locNew = (2399 * (1 - resalePct / 100)) / amortMonths + ((rS / 5) * (model.sec_720p * (FE.RES_COMPUTE_MULT[res] || 2.35) / 0.45) / 3600) * 0.14 * elecRate;
+          return { saasCost: kPlan.monthlyCost, cloudGpuCost: gTco.totalMonthly, localNewCost: locNew };
+        });
+        document.getElementById("kpi-inf-cloud").textContent = inf.cloudBeatsSaasMin ? `≥ ${inf.cloudBeatsSaasMin} min/月` : "全区间云GPU更省";
+        document.getElementById("kpi-inf-local").textContent = inf.localBeatsCloudMin ? `≥ ${inf.localBeatsCloudMin} min/月` : "> 240 min/月";
+      }
 
       rows.push({
         name: L.humanRowName, vramBadge: L.humanBadge, oom: false, slaOver: false,
@@ -1905,7 +1954,8 @@
           </div>`;
       }).join("");
 
-      document.getElementById("table-body").innerHTML = rows.map(r => `
+      window.__LAST_ROWS = rows;
+      document.getElementById("table-body").innerHTML = rows.map((r, idx) => `
         <tr style="${r.oom ? 'opacity:0.55;' : ''}">
           <td>${r.name} ${r.type === 'hybrid' ? `<span class="tag-best">${L.bestTag}</span>` : ''} ${r.oom ? `<span class="tag-oom">${L.oomTag}</span>` : ''}</td>
           <td>${r.vramBadge} ${r.slaOver ? `<span class="tag-oom">${L.slaOverTag}</span>` : ''}</td>
@@ -1914,7 +1964,7 @@
           <td><strong>${r.ordersNeeded} ${L.unitOrder}</strong></td>
           <td>${r.hours.toFixed(1)}h (${(r.hours/30).toFixed(1)}h/d)</td>
           <td><a href="${r.source_url}" target="_blank" rel="noopener">${r.source_name}</a></td>
-          <td><a class="cta-btn" href="${r.affiliate_url}" target="_blank" rel="noopener">${r.cta}</a></td>
+          <td style="display:flex;gap:5px;align-items:center;"><button class="cta-btn" style="cursor:pointer;background:rgba(129,140,248,0.16);color:var(--accent2);border-color:rgba(129,140,248,0.4);" onclick="openAuditModal(${idx})">🔍 算式</button><a class="cta-btn" href="${r.affiliate_url}" target="_blank" rel="noopener">${r.cta}</a></td>
         </tr>
       `).join("");
 
@@ -1949,6 +1999,19 @@ ${lastDispatchedQueue.map(s => `- ${s.id} → ${s.node} | ${fmtMoney(s.costUsd)}
       const url = window.location.origin + window.location.pathname + "?" + params.toString();
       navigator.clipboard.writeText(url);
       alert(t().copyDone + "\n\n" + url);
+    }
+
+    function openAuditModal(idx) {
+      const r = (window.__LAST_ROWS || [])[idx];
+      if (!r) return;
+      const lines = (r.audit && r.audit.length) ? r.audit : [
+        `Monthly Total: ${fmtMoney(r.monthly, 2)} (Cost/Video: ${fmtMoney(r.perVideo, 2)})`,
+        `Hours/Month: ${r.hours.toFixed(1)}h (${(r.hours/30).toFixed(1)}h/day)`,
+        `Primary Source: ${r.source_name} (${r.source_url})`
+      ];
+      document.getElementById("modal-title").textContent = `🔍 Glass-Box 白盒算式审计 — ${r.name}`;
+      document.getElementById("modal-content").textContent = lines.map((l, i) => `${i + 1}. ${l}`).join("\n\n") + `\n\nVerified Source: ${r.source_url}`;
+      document.getElementById("report-modal").classList.remove("hidden");
     }
 
     function openReportModal() {
